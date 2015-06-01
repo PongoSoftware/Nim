@@ -1,8 +1,8 @@
 package utils;
 
-public class Pila {
+public class Stack {
 	private Nodo raiz;
-	public Pila(){
+	public Stack(){
 		raiz = null;
 	}
 	
@@ -46,7 +46,7 @@ public class Pila {
 	}
 	
 	public static void main(String[] args){
-		Pila pila1= new Pila();
+		Stack pila1= new Stack();
 		pila1.push(40);
 		pila1.push(16);
 		pila1.push(25);
