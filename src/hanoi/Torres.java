@@ -74,11 +74,20 @@ public class Torres {
 		return valor;
 	}
 	
+	/**
+	 * Ejecuta el movimiento entre las pilas
+	 * @param inicio
+	 * @param destino
+	 */
 	public void mover(int inicio, int destino){
-		//Comprobar muy bien que no se ponga en un disco que no corresponda
+		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
 		if (inicio > 3 || inicio < 1 || destino > 3 || inicio < 1) {
 			System.out.println("error");
-		} else {
+		} else { //torres válidas
+			//Comprueba que no se pone el disco encima de un disco más pequeño
+			//Además hay que tener cuidado con algunas cosas:
+				//Que ocurre cuando el disco que estás cogiendo es inexistente
+				//Que ocurre cuando la torre en la que vas a ponerla está vacía
 			if (get(inicio) > get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
 				int disco = 0;
 				disco = extraer(inicio);
@@ -100,34 +109,30 @@ public class Torres {
 		PanelDibujo ventana = frame.getVentana();		
 		return ventana;
 	}
-	
-	public static void main(String Args[]){
-		PanelDibujo ventana = crearVentana();
-		Torres torres = new Torres(9,ventana);
-		ventana.repaint();
-		while (true){
-			try {
-				torres.show();
-				ventana.repaint();
-				//COn consola:
-				//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
-				//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
-				//torres.mover(origen, destino);	
-				
-				//Con GUI:
-				torres.procesarBotones();
-				Thread.sleep(200);
-			} catch (Exception e){
-				//
-			}
-		}
-	}
 
+	/** 
+	 * Recibe un mensaje desde la interfaz gráfica
+	 * @param mensajeRecibido
+	 */
 	public static void recibirMensaje(int mensajeRecibido) {
-		mensajeAnterior = mensaje;
-		mensaje = mensajeRecibido;
+		mensajeAnterior = mensaje; //mensaje anteriormente recibido
+		mensaje = mensajeRecibido; //mensaje actual obtenido
 	}
 	
+	/**
+	 * Procesa los mensajes recibidos
+	 * 
+	 * Lista de códigos:
+	 * 1 Quitar de torre 1
+	 * 2 Quitar de torre 2
+	 * 3 Quitar de torre 3
+	 * 4 Poner en torre 1
+	 * 5 Poner en torre 2
+	 * 6 Poner en torre 3
+	 * 7 Pulsar el botón atrás
+	 * 8 Pulsar el botón adelante
+	 * 
+	 */
 	public void procesarBotones(){
 		//Opciones de quitar y poner
 		if (mensajePoner()){
@@ -151,7 +156,11 @@ public class Torres {
 			}
 		}
 	}
-	
+	/**
+	 * Comprueba si se ha recibido un mensaje de poner
+	 * 
+	 * @return
+	 */
 	private boolean mensajePoner() {
 		if (mensaje < 4 || mensaje > 6){
 			return false;
@@ -160,6 +169,11 @@ public class Torres {
 		}
 	}
 
+	/**
+	 * Comprueba si el mensaje anterior era de quitar un disco
+	 * 
+	 * @return
+	 */
 	private boolean mensajeAnteriorQuitar() {
 		if (mensajeAnterior < 1 || mensajeAnterior > 3){
 			return false;
@@ -179,5 +193,27 @@ public class Torres {
 		}
 		
 		return pila;
+	}
+	
+	public static void main(String Args[]){
+		PanelDibujo ventana = crearVentana();
+		Torres torres = new Torres(9,ventana);
+		ventana.repaint();
+		while (true){
+			try {
+				torres.show();
+				ventana.repaint();
+				//COn consola:
+				//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
+				//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
+				//torres.mover(origen, destino);	
+				
+				//Con GUI:
+				torres.procesarBotones();
+				Thread.sleep(35);
+			} catch (Exception e){
+				//
+			}
+		}
 	}
 }

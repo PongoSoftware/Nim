@@ -63,8 +63,6 @@ public class Stack {
 		
 	}
 	
-	
-	
 	public void push(int d){
 		if (d != 0) {
 			Nodo nuevo;
@@ -127,6 +125,7 @@ public class Stack {
 		}
 	}
 	
+	//No se utiliza..
 	public void recorrerGrafico(Graphics g){
 		try{
 			Nodo elemento = new Nodo();
