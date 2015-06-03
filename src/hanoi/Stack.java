@@ -73,7 +73,7 @@ public class Stack {
 			if (raiz==null){
 				nuevo.sig = null;
 				raiz = nuevo;	
-				System.out.print("He hecho un push "+nuevo.dato);
+				//System.out.print("He hecho un push "+nuevo.dato);
 			} else {
 				nuevo.sig = raiz;
 				raiz = nuevo;
@@ -88,7 +88,6 @@ public class Stack {
 	}
 	
 	public int pop(){
-		
 		if (raiz!= null){
 				int informacion = raiz.dato;
 				raiz=raiz.sig;
@@ -97,8 +96,15 @@ public class Stack {
 		} else {
 			//return Integer.MAX_VALUE;
 			return 0;
+		}		
+	}
+	
+	public int get(){
+		int informacion = Integer.MAX_VALUE;
+		if (raiz!=null){
+			informacion = raiz.dato;
 		}
-		
+		return informacion;
 	}
 	
 	public Nodo next(Nodo elemento){
@@ -114,10 +120,10 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-				System.out.println("TORRE "+numTorre+" Pinta el elemento "+elemento.dato+"_numero de pisos de la torre"+lastRow);
+				//System.out.println("TORRE "+numTorre+" Pinta el elemento "+elemento.dato+"_numero de pisos de la torre"+lastRow);
 			}
 		} catch (Exception e) {
-			System.out.println("No hay elementos en la torre "+numTorre);
+			//System.out.println("No hay elementos en la torre "+numTorre);
 		}
 	}
 	

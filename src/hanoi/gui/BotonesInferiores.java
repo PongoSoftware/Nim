@@ -1,5 +1,7 @@
 package hanoi.gui;
 
+import hanoi.Torres;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,11 +35,11 @@ public class BotonesInferiores extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnPoner1) {
-			//...
+			Torres.recibirMensaje(4);
 		} else if (e.getSource()==btnPoner2) {
-	//...
+			Torres.recibirMensaje(5);
 		} else if (e.getSource()==btnPoner3) {
-			//...
+			Torres.recibirMensaje(6);
 		} else {
 		}
 	}
