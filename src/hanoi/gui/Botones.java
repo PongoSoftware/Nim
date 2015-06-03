@@ -11,6 +11,10 @@ public class Botones extends JPanel implements ActionListener {
 
 	private JButton btnPoner1, btnPoner2, btnPoner3, btnQuitar1, btnQuitar2, btnQuitar3;
 
+	
+	private boolean origenCambiado = false; 
+	private boolean destinoCambiado = false;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -46,12 +50,31 @@ public class Botones extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnPoner1) {
-			//...
+			
+			destinoCambiado = true;
+			
 		} else if (e.getSource()==btnPoner2) {
-	//...
+			
+			destinoCambiado = true;
+			
 		} else if (e.getSource()==btnPoner3) {
-			//...
+			
+			destinoCambiado = true;
+			
+		} else if (e.getSource()==btnQuitar1) {
+	
+			origenCambiado = true;
+			
+		} else if (e.getSource()==btnQuitar2) {
+			
+			origenCambiado = true;
+			
+		}else if (e.getSource()==btnQuitar3) {
+	
+			origenCambiado = true;
+			
 		} else {
+			//...
 		}
 	}
 }
