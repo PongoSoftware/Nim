@@ -23,6 +23,12 @@ public class Stack {
 		Nodo sig;
 		boolean inicializado = false;
 		public int torre;
+		//Variables gráficas
+		private static final int multiplicador = 22; //Multiplicador utilizado en el calculo de posiciones
+		private static final int xinicial = 75;
+		private static final int  yinicial = 280;
+		private int x, y, width, height, xwidth, yheight;
+		private Color color;
 		
 		public boolean hasNext(){
 			if (!inicializado){
@@ -38,29 +44,40 @@ public class Stack {
 		public Nodo next(){
 			return sig;
 		}
-		public void paint(Graphics g) {
-			//calcular posiciones en pantalla
-			int multiplicador = 24;
-			int xi = 75;
-			int yi = 280;
-			int width = dato * multiplicador;
-			int heigth = (int) (multiplicador * 0.8);
-			int x = xi + (numTorre-1) * multiplicador*10 + (100 - width) / 2;
-			int y = yi - (piso * multiplicador);
-			//Fin calcular posiciones en patnalla
-			
-			dameColor(g);
-			g.fillRect(x,y,width, heigth);		
-		}
-		
-		public void dameColor(Graphics g){
-			Color color;
-			
-				color = new Color(dato*10,dato*10,dato*10);
+		public void paint(Graphics g) {			
 			g.setColor(color);
-				
+			g.fillRect(x,y,width, height);		
 		}
 		
+		public void calcularPosiciones(){
+			//calcular posiciones en pantalla			
+			width = dato * multiplicador;
+			height = (int) (multiplicador * 0.8);
+			x = xinicial + (numTorre-1) * multiplicador*10 + (100 - width) / 2;
+			y = yinicial - (piso * multiplicador);
+			xwidth = x + width;
+			yheight = y + height;
+			color = new Color(dato*10,dato*10,dato*10);
+		}
+		
+		public void setPosicion(int x, int y){
+			this.x = x;
+			this.y = y;
+			this.xwidth = this.x + this.width;
+			this.yheight = this.y + this.height;
+		}
+
+		public boolean comprobarPosicion(int x, int y){
+			if (this.x <= x && this.width >= x){
+				if (this.y <= y && this.height >= y){
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}			
+		}		
 	}
 	
 	public void push(int d){
@@ -80,6 +97,7 @@ public class Stack {
 			lastRow++;
 			nuevo.piso = lastRow;
 			nuevo.torre = numTorre;
+			nuevo.calcularPosiciones();
 			
 			nuevo.inicializado = true;
 		}
@@ -125,7 +143,10 @@ public class Stack {
 		}
 	}
 	
-	//No se utiliza..
+	/*
+	 * Recorre gráficamente la pila
+	 * Se llama desde PanelDibujo
+	 */
 	public void recorrerGrafico(Graphics g){
 		try{
 			Nodo elemento = new Nodo();
@@ -135,8 +156,6 @@ public class Stack {
 			}
 		} catch (Exception e) {}
 	}
-	
-
 	
 	public void print(){
 		Nodo aux = raiz;
