@@ -1,4 +1,4 @@
-package Hanoi;
+package hanoi;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
