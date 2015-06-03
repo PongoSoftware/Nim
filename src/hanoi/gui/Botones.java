@@ -1,30 +1,11 @@
 package hanoi.gui;
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
-
-import java.awt.BorderLayout;
-
-import javax.swing.BoxLayout;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import net.miginfocom.swing.MigLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class Botones extends JPanel implements ActionListener {
 

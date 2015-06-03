@@ -65,6 +65,7 @@ public class Torres {
 			int disco = 0;
 			disco = extraer(inicio);
 			poner(inicio,destino,disco);
+			System.out.println("_______");
 		}
 		
 	}

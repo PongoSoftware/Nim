@@ -70,7 +70,7 @@ public class Stack {
 		if (raiz==null){
 			nuevo.sig = null;
 			raiz = nuevo;	
-			System.out.print("pus");
+			System.out.print("He hecho un push "+nuevo.dato);
 		} else {
 			nuevo.sig = raiz;
 			raiz = nuevo;
@@ -88,7 +88,7 @@ public class Stack {
 		if (raiz!= null){
 				int informacion = raiz.dato;
 				raiz=raiz.sig;
-				lastRow = lastRow--;
+				lastRow--;
 				return informacion;
 		} else {
 			return Integer.MAX_VALUE;
