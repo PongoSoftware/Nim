@@ -2,6 +2,7 @@ package hanoi.gui;
 
 import hanoi.Stack;
 import hanoi.Stack.Nodo;
+import hanoi.Torres;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +15,7 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-public class PanelDibujo extends JPanel{ // implements MouseListener, MouseMotionListener{
+public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionListener{
 
 	private Stack torre1;
 	private Stack torre2;
@@ -57,63 +58,58 @@ public class PanelDibujo extends JPanel{ // implements MouseListener, MouseMotio
 	public void repaint(){
 		super.repaint();
 	}
-/*
-	@Override
+
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		//System.out.println("click"+e.getX()+"_"+e.getY());
-		if(disco.comprobarPosicion(e.getX(),e.getY())){
+		Torres.recibirMensaje(9);
+		Torres.setPosiciones(e.getX(),e.getY());
+		/*if(disco.comprobarPosicion(e.getX(),e.getY())){
 //			System.out.println("click");
 		} else {
 //			System.out.println("no click");
-		}
+		}*/
 		
 	}
 
-	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 //		System.out.println("entered");
 	}
 
-	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 //		System.out.println("exit");
 	}
-/*
-	@Override
+
 	public void mousePressed(MouseEvent e) {		 
-		if(disco.comprobarPosicion(e.getX(),e.getY())){
-			disco.estaPresionado = true;
-		}
-		System.out.println(e.getX()+"_"+e.getY());
+//		if(disco.comprobarPosicion(e.getX(),e.getY())){
+//			disco.estaPresionado = true;
+//		}
+//		System.out.println(e.getX()+"_"+e.getY());
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (disco.estaPresionado) {
-			disco.estaPresionado = false;
+//		if (disco.estaPresionado) {
+//			disco.estaPresionado = false;
 //			System.out.println("libera");
-		}
+//		}
 	}
 
-	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (disco.estaPresionado) {
+		/*if (disco.estaPresionado) {
 			disco.setPosicion(e.getX(), e.getY());
-		}
+		}*/
 		
 	}
-	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		//System.out.println("move");
 		
-	}*/
+	}
 	
 }

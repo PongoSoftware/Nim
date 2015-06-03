@@ -12,6 +12,7 @@ public class Torres {
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
+	private static int posx, posy;
 	public Torres(int higth, PanelDibujo ventana){
 		leftTower = new Stack(ventana,1);
 		centerTower = new Stack(ventana,2);
@@ -74,6 +75,21 @@ public class Torres {
 		return valor;
 	}
 	
+	private int mandarPosicion(int torre, int x, int y){
+		int valor = Integer.MAX_VALUE;
+		switch(torre){
+		case 1:
+			leftTower.recibePosicion(x,y);
+			break;
+		case 2:
+			centerTower.recibePosicion(x,y);
+			break;
+		case 3:
+			rigthTower.recibePosicion(x,y);
+			break;
+		}	
+		return valor;	}
+	
 	/**
 	 * Ejecuta el movimiento entre las pilas
 	 * @param inicio
@@ -94,8 +110,7 @@ public class Torres {
 				poner(inicio,destino,disco);
 				System.out.println("_______");
 			}
-		}
-		
+		}		
 	}
 
 	public void show(){
@@ -120,6 +135,19 @@ public class Torres {
 	}
 	
 	/**
+	 * Recibe las posiciones en la x e y
+	 * @param x
+	 * @param y
+	 */
+	public static void setPosiciones(int x, int y){
+		posx = x;
+		posy = y;
+	}
+	
+	
+	
+	
+	/**
 	 * Procesa los mensajes recibidos
 	 * 
 	 * Lista de códigos:
@@ -131,6 +159,7 @@ public class Torres {
 	 * 6 Poner en torre 3
 	 * 7 Pulsar el botón atrás
 	 * 8 Pulsar el botón adelante
+	 * 9 
 	 * 
 	 */
 	public void procesarBotones(){
@@ -216,4 +245,25 @@ public class Torres {
 			}
 		}
 	}
+	/*public static void main(String Args[]){
+//		PanelDibujo ventana = crearVentana();
+		Torres torres = new Torres(9,ventana);
+//		ventana.repaint();
+		while (true){
+			try {
+				torres.show();
+				ventana.repaint();
+				//COn consola:
+				//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
+				//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
+				//torres.mover(origen, destino);	
+				
+				//Con GUI:
+				torres.procesarBotones();
+				Thread.sleep(35);
+			} catch (Exception e){
+				//
+			}
+		}
+	}*/
 }

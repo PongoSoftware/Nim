@@ -10,6 +10,7 @@ public class Stack {
 	private int lastRow = 0;
 	private int numTorre;
 	private PanelDibujo ventana;
+	private static int posex, posey;
 	
 	public Stack(PanelDibujo ventana, int i){
 		raiz = null;
@@ -152,6 +153,8 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
+				elemento.comprobarPosicion(posex, posey);
+				elemento.calcularPosiciones();
 				elemento.paint(g);
 			}
 		} catch (Exception e) {}
@@ -165,5 +168,10 @@ public class Stack {
 			aux=aux.sig;
 		}
 		System.out.println();
+	}
+
+	public void recibePosicion(int x, int y) {
+		posex = x;
+		posey = x;		
 	}
 }
