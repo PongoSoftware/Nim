@@ -17,6 +17,12 @@ public class Stack {
 		this.ventana = ventana;
 	}
 	
+	public Stack(){
+		
+		raiz = null;
+		
+	}
+	
 	public class Nodo {
 		int dato;
 		int piso;

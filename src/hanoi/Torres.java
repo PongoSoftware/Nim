@@ -12,10 +12,17 @@ public class Torres {
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
+	
+	private Stack movesStack; // ----------- Pila de movimientos realizados
+	
+	private static int contMovimientos = 0;
+	
 	public Torres(int higth, PanelDibujo ventana){
 		leftTower = new Stack(ventana,1);
 		centerTower = new Stack(ventana,2);
 		rigthTower = new Stack(ventana,3);
+		
+		movesStack = new Stack();
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
@@ -81,17 +88,19 @@ public class Torres {
 	 */
 	public void mover(int inicio, int destino){
 		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
-		if (inicio > 3 || inicio < 1 || destino > 3 || inicio < 1) {
+		if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
 			System.out.println("error");
 		} else { //torres válidas
 			//Comprueba que no se pone el disco encima de un disco más pequeño
 			//Además hay que tener cuidado con algunas cosas:
 				//Que ocurre cuando el disco que estás cogiendo es inexistente
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
-			if (get(inicio) > get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
 				int disco = 0;
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
+				System.out.println();
+				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 				System.out.println("_______");
 			}
 		}
@@ -138,6 +147,7 @@ public class Torres {
 		if (mensajePoner()){
 			if (mensajeAnteriorQuitar()){
 				
+				contMovimientos++;
 				int origen = mensajeAnterior;
 				int destino = deMensajeANumPila(mensaje);
 				System.out.println(mensaje+"_"+destino);
@@ -193,6 +203,13 @@ public class Torres {
 		}
 		
 		return pila;
+	}
+	
+	
+	public static int movimientosRealizados(){
+		
+		return contMovimientos;
+		
 	}
 	
 	public static void main(String Args[]){
