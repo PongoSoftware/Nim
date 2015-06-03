@@ -18,8 +18,8 @@ public class Torres {
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
-			//centerTower.push(i);
-			//rigthTower.push(i);
+			centerTower.push(i);
+			rigthTower.push(i);
 		}
 		ventana.setTorre1(leftTower);
 		ventana.setTorre2(centerTower);

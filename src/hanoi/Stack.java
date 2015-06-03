@@ -41,7 +41,7 @@ public class Stack {
 		public void paint(Graphics g) {
 			//calcular posiciones en pantalla
 			int multiplicador = 24;
-			int xi = 100;
+			int xi = 75;
 			int yi = 280;
 			int width = dato * multiplicador;
 			int heigth = (int) (multiplicador * 0.8);

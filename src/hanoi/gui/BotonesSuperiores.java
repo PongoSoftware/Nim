@@ -1,0 +1,45 @@
+package hanoi.gui;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class BotonesSuperiores extends JPanel implements ActionListener {
+
+	private JButton btnQuitar1, btnQuitar2, btnQuitar3;
+
+	/**
+	 * Create the panel.
+	 */
+	public BotonesSuperiores() {
+		btnQuitar1 = new JButton("Quitar");
+		btnQuitar1.addActionListener(this);
+
+		btnQuitar2 = new JButton("Quitar");
+		btnQuitar2.addActionListener(this);
+
+		btnQuitar3 = new JButton("Quitar");
+		btnQuitar3.addActionListener(this);
+
+		
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		add(btnQuitar1);
+		add(btnQuitar2);
+		add(btnQuitar3);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource()==btnQuitar1) {
+			//...
+		} else if (e.getSource()==btnQuitar2) {
+	//...
+		} else if (e.getSource()==btnQuitar3) {
+			//...
+		} else {
+		}
+	}
+}

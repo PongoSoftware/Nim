@@ -14,15 +14,19 @@ public class MiFrame extends JFrame {
 		super(title);
 		
 		setVisible(true);
-		setSize(800,380);
+		setSize(900,400);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		ventana = new PanelDibujo(this);
 
-		JPanel botones = new Botones(); 
-		getContentPane().add(botones, BorderLayout.NORTH);
+		JPanel botonesSuperiores = new BotonesSuperiores(); 
+		getContentPane().add(botonesSuperiores, BorderLayout.NORTH);
+		JPanel botonesInferiores= new BotonesInferiores(); 
+		getContentPane().add(botonesInferiores, BorderLayout.SOUTH);
+		JPanel botonesDerechos= new BotonesDerechos(); 
+		getContentPane().add(botonesDerechos, BorderLayout.EAST);
 		
 	}
 	
