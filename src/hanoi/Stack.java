@@ -39,6 +39,7 @@ public class Stack {
 			return sig;
 		}
 		public void paint(Graphics g) {
+			//calcular posiciones en pantalla
 			int multiplicador = 24;
 			int xi = 100;
 			int yi = 280;
@@ -46,6 +47,7 @@ public class Stack {
 			int heigth = (int) (multiplicador * 0.8);
 			int x = xi + (numTorre-1) * multiplicador*10 + (100 - width) / 2;
 			int y = yi - (piso * multiplicador);
+			//Fin calcular posiciones en patnalla
 			
 			dameColor(g);
 			g.fillRect(x,y,width, heigth);		
@@ -64,23 +66,25 @@ public class Stack {
 	
 	
 	public void push(int d){
-		Nodo nuevo;
-		nuevo = new Nodo();
-		nuevo.dato = d;
-		if (raiz==null){
-			nuevo.sig = null;
-			raiz = nuevo;	
-			System.out.print("He hecho un push "+nuevo.dato);
-		} else {
-			nuevo.sig = raiz;
-			raiz = nuevo;
+		if (d != 0) {
+			Nodo nuevo;
+			nuevo = new Nodo();
+			nuevo.dato = d;
+			if (raiz==null){
+				nuevo.sig = null;
+				raiz = nuevo;	
+				System.out.print("He hecho un push "+nuevo.dato);
+			} else {
+				nuevo.sig = raiz;
+				raiz = nuevo;
+			}
+			
+			lastRow++;
+			nuevo.piso = lastRow;
+			nuevo.torre = numTorre;
+			
+			nuevo.inicializado = true;
 		}
-		
-		lastRow++;
-		nuevo.piso = lastRow;
-		nuevo.torre = numTorre;
-		
-		nuevo.inicializado = true;
 	}
 	
 	public int pop(){
@@ -91,7 +95,8 @@ public class Stack {
 				lastRow--;
 				return informacion;
 		} else {
-			return Integer.MAX_VALUE;
+			//return Integer.MAX_VALUE;
+			return 0;
 		}
 		
 	}

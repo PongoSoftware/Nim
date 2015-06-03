@@ -37,7 +37,7 @@ public class Torres {
 			disco = centerTower.pop();
 			break;
 		case 3:
-			disco = centerTower.pop();
+			disco = rigthTower.pop();
 			break;
 		}
 		return disco;
