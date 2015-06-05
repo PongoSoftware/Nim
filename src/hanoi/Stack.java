@@ -30,7 +30,7 @@ public class Stack {
 		//Variables gráficas
 		private static final int multiplicador = 22; //Multiplicador utilizado en el calculo de posiciones
 		private static final int xinicial = 75;
-		private static final int  yinicial = 280;
+		private static final int  yinicial = 260;
 		private int x, y, width, height, xwidth, yheight;
 		private Color color;
 		private boolean presionado;
@@ -66,6 +66,8 @@ public class Stack {
 			xwidth = x + width;
 			yheight = y + height;
 			color = new Color(dato*10,dato*10,dato*10);
+			System.out.print(x+"_"+y+"_");
+			System.out.print(xwidth+"_"+yheight+"\n");
 		}
 		
 		/**
@@ -206,7 +208,7 @@ public class Stack {
 	public void comprobarClick(int posx, int posy) {
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
@@ -219,7 +221,7 @@ public class Stack {
 	public void comprobarPresion(int posx, int posy) {
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
@@ -233,7 +235,7 @@ public class Stack {
 		boolean yaHaMovido = false;
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext() && !yaHaMovido){
+			if(elemento.hasNext() && !yaHaMovido){
 				elemento = next(elemento);
 				if (elemento.getPresion()){
 					elemento.setPosicion(x,y);
@@ -244,14 +246,18 @@ public class Stack {
 		return yaHaMovido;
 	}
 
-	public void liberar(int x, int y) {
+	public boolean liberar(int x, int y) {
+		boolean liberacion = false;
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
-				elemento.setPresion(false);
+				if (elemento.getPresion()) {
+					elemento.setPresion(false);
+					liberacion = true;
+				}
 			}
 		} catch (Exception e) {}
-		
+		return liberacion;
 	}
 }
