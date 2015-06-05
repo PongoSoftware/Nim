@@ -101,6 +101,7 @@ public class Torres {
 				//Que ocurre cuando el disco que estás cogiendo es inexistente
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
 			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+				contMovimientos++;
 				takeStack.push(inicio);
 				placeStack.push(destino);	
 				borrarRehacer();
@@ -124,7 +125,7 @@ public class Torres {
 					//Además hay que tener cuidado con algunas cosas:
 						//Que ocurre cuando el disco que estás cogiendo es inexistente
 						//Que ocurre cuando la torre en la que vas a ponerla está vacía
-					if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {				
+					if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
 						int disco = 0;
 						disco = extraer(inicio);
 						poner(inicio,destino,disco);
@@ -140,7 +141,7 @@ public class Torres {
 	public void deshacer(){
 
 		if(placeStack.get() != Integer.MAX_VALUE && takeStack.get() != Integer.MAX_VALUE){
-		
+			
 			int inicio = placeStack.pop();
 			int destino = takeStack.pop();
 			
@@ -149,6 +150,8 @@ public class Torres {
 			
 			mover(inicio, destino, true);
 		
+			contMovimientos--;
+			
 		}
 		
 		mensaje = 0;
@@ -166,6 +169,8 @@ public class Torres {
 			takeStack.push(inicio);
 			
 			mover(inicio, destino, true);
+			
+			contMovimientos++;
 			
 		}
 		
@@ -231,7 +236,6 @@ public class Torres {
 		if (mensajePoner()){
 			if (mensajeAnteriorQuitar()){
 				
-				contMovimientos++;
 				int origen = mensajeAnterior;
 				int destino = deMensajeANumPila(mensaje);
 				System.out.println(mensaje+"_"+destino);
