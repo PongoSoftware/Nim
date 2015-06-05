@@ -16,6 +16,9 @@ public class Torres {
 	private Stack takeStack; // ----------- Pila de movimientos realizados
 	private Stack placeStack;
 	
+	private Stack retakeStack;
+	private Stack replaceStack;
+	
 	private static int contMovimientos = 0;
 	
 	public Torres(int higth, PanelDibujo ventana){
@@ -140,7 +143,26 @@ public class Torres {
 		int inicio = placeStack.pop();
 		int destino = takeStack.pop();
 		
+		replaceStack.push(inicio);
+		retakeStack.push(destino);
+		
 		mover(inicio, destino, true);
+		
+		mensaje = 0;
+		
+	}
+	
+	public void rehacer(){
+		
+		int inicio = replaceStack.pop();
+		int destino = retakeStack.pop();
+		
+		placeStack.push(inicio);
+		takeStack.push(destino);
+		
+		mover(inicio, destino, true);
+		
+		mensaje = 0;
 		
 	}
 
@@ -161,6 +183,7 @@ public class Torres {
 	 * @param mensajeRecibido
 	 */
 	public static void recibirMensaje(int mensajeRecibido) {
+		
 		mensajeAnterior = mensaje; //mensaje anteriormente recibido
 		mensaje = mensajeRecibido; //mensaje actual obtenido
 	}
@@ -197,6 +220,9 @@ public class Torres {
 		} else {
 			switch(mensaje){
 			case 7:
+				
+				deshacer();
+				
 				break;
 			case 8:
 				break;
