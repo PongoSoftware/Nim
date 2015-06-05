@@ -25,6 +25,9 @@ public class Torres {
 		takeStack = new Stack();
 		placeStack = new Stack();
 		
+		retakeStack = new Stack();
+		replaceStack = new Stack();
+		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
 			//centerTower.push(i);
