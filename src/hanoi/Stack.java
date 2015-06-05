@@ -30,6 +30,7 @@ public class Stack {
 		private static final int  yinicial = 280;
 		private int x, y, width, height, xwidth, yheight;
 		private Color color;
+		private boolean presionado;
 		
 		public boolean hasNext(){
 			if (!inicializado){
@@ -68,9 +69,11 @@ public class Stack {
 			this.yheight = this.y + this.height;
 		}
 
+		//Compruebo que se haya hecho click sobre él.
 		public boolean comprobarPosicion(int x, int y){
-			if (this.x <= x && this.width >= x){
-				if (this.y <= y && this.height >= y){
+			if (this.x <= x && this.xwidth >= x){
+				System.out.println(this.y+"-"+y+"_"+this.yheight);
+				if (this.y <= y && this.yheight >= y){
 					return true;
 				} else {
 					return false;
@@ -78,7 +81,13 @@ public class Stack {
 			} else {
 				return false;
 			}			
+		}
+		public void setPresion(boolean b) {
+			presionado = b;			
 		}		
+		public boolean getPresion(){
+			return presionado;
+		}
 	}
 	
 	public void push(int d){
@@ -153,8 +162,13 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-				elemento.comprobarPosicion(posex, posey);
-				elemento.calcularPosiciones();
+				//if(mensaje == 9) {
+				//	elemento.setPresionado(true);
+				//}
+				//if(elemento.comprobarPosicion(posex, posey)){
+				//	elemento.setPresionado(true);
+				//}
+//				elemento.calcularPosiciones();
 				elemento.paint(g);
 			}
 		} catch (Exception e) {}
@@ -173,5 +187,59 @@ public class Stack {
 	public void recibePosicion(int x, int y) {
 		posex = x;
 		posey = x;		
+	}
+
+	public void comprobarClick(int posx, int posy) {
+		try{
+			Nodo elemento = new Nodo();
+			while(elemento.hasNext()){
+				elemento = next(elemento);
+//				System.out.println("pruebo click");
+				if(elemento.comprobarPosicion(posx, posy)){
+					elemento.setPresion(true);
+				}
+			}
+		} catch (Exception e) {}
+		
+	}
+
+	public void comprobarPresion(int posx, int posy) {
+		try{
+			Nodo elemento = new Nodo();
+			while(elemento.hasNext()){
+				elemento = next(elemento);
+//				System.out.println("pruebo click");
+				if(elemento.comprobarPosicion(posx, posy)){
+					elemento.setPresion(true);
+				}
+			}
+		} catch (Exception e) {}
+		
+	}
+
+	public boolean arrastra(int x, int y) {
+		boolean yaHaMovido = false;
+		try{
+			Nodo elemento = new Nodo();
+			while(elemento.hasNext() && !yaHaMovido){
+				elemento = next(elemento);
+				if (elemento.getPresion()){
+					elemento.setPosicion(x,y);
+					yaHaMovido = true;
+				}
+			}
+		} catch (Exception e) {}
+		return yaHaMovido;
+	}
+
+	public void liberar(int x, int y) {
+		try{
+			Nodo elemento = new Nodo();
+			while(elemento.hasNext()){
+				elemento = next(elemento);
+				elemento.setPresion(false);
+			}
+		} catch (Exception e) {}
+		
 	}
 }

@@ -20,6 +20,7 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	private Stack torre1;
 	private Stack torre2;
 	private Stack torre3;
+	private Torres torresHanoi;
 
 	/**
 	 * Create the panel.
@@ -27,11 +28,17 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	 */
 	public PanelDibujo(MiFrame miFrame) {
 		miFrame.getContentPane().add(this, BorderLayout.CENTER);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+	}
+	
+	public void setTorresHanoi(Torres torres){
+		torresHanoi = torres;
 	}
 	
 	public void paintComponent(Graphics g){
 		 super.paintComponent(g);
-		 
+
 		 if(torre1 != null){
 			 torre1.recorrerGrafico(g);
 		 }
@@ -60,15 +67,7 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		//System.out.println("click"+e.getX()+"_"+e.getY());
-		Torres.recibirMensaje(9);
-		Torres.setPosiciones(e.getX(),e.getY());
-		/*if(disco.comprobarPosicion(e.getX(),e.getY())){
-//			System.out.println("click");
-		} else {
-//			System.out.println("no click");
-		}*/
+		torresHanoi.recibirRaton(1,e.getX(),e.getY());
 		
 	}
 
@@ -79,31 +78,40 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	}
 
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-//		System.out.println("exit");
+		torresHanoi.recibirRaton(5,e.getX(),e.getY());
 	}
 
-	public void mousePressed(MouseEvent e) {		 
+	public void mousePressed(MouseEvent e) {
+		torresHanoi.recibirRaton(2,e.getX(),e.getY());
 //		if(disco.comprobarPosicion(e.getX(),e.getY())){
 //			disco.estaPresionado = true;
 //		}
 //		System.out.println(e.getX()+"_"+e.getY());
+//		variable = "Presionado";
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		torresHanoi.recibirRaton(4, 0, 0);
 		// TODO Auto-generated method stub
 //		if (disco.estaPresionado) {
 //			disco.estaPresionado = false;
 //			System.out.println("libera");
 //		}
+//		variable = "libero";
 	}
 
 	public void mouseDragged(MouseEvent e) {
+		torresHanoi.recibirRaton(3,e.getX(),e.getY());
 		// TODO Auto-generated method stub
 		/*if (disco.estaPresionado) {
 			disco.setPosicion(e.getX(), e.getY());
 		}*/
+//		if (variable != null){
+//		if (!variable.equals("click")){
+//			variable = "arrastro";
+//		}} else {
+//			variable = "arrastro";
+//		}
 		
 	}
 	public void mouseMoved(MouseEvent e) {
