@@ -15,6 +15,12 @@ public class Stack {
 		this.numTorre = i;
 	}
 	
+	public Stack(){
+		
+		raiz = null;
+		
+	}
+	
 	public class Nodo {
 		int dato;
 		int piso;

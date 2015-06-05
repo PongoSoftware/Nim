@@ -8,11 +8,28 @@ public class Torres {
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
+
+
+	
+	private Stack takeStack; // ----------- Pila de movimientos realizados
+	private Stack placeStack;
+	
+	private Stack retakeStack;
+	private Stack replaceStack;
+	
+	private static int contMovimientos = 0;
+	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth, PanelDibujo ventana){
 		leftTower = new Stack(ventana,1);
 		centerTower = new Stack(ventana,2);
 		rigthTower = new Stack(ventana,3);
+		
+		takeStack = new Stack();
+		placeStack = new Stack();
+		
+		retakeStack = new Stack();
+		replaceStack = new Stack();
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
@@ -25,7 +42,8 @@ public class Torres {
 		
 	}
 	
-	private int extraer(int inicio){
+	private int extraer(int inicio){ // No es útli de momento, porque registra todos los movimientos, incluso los de 
+									// rollback D:
 		int disco = 0;
 		switch(inicio){
 		case 1:
@@ -78,20 +96,75 @@ public class Torres {
 	 */
 	public void mover(int inicio, int destino){
 		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
-		if (inicio > 3 || inicio < 1 || destino > 3 || inicio < 1) {
+		if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
 			System.out.println("error");
 		} else { //torres válidas
 			//Comprueba que no se pone el disco encima de un disco más pequeño
 			//Además hay que tener cuidado con algunas cosas:
 				//Que ocurre cuando el disco que estás cogiendo es inexistente
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
-			if (get(inicio) > get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+				takeStack.push(inicio);
+				placeStack.push(destino);				
 				int disco = 0;
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
+				System.out.println();
+				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 				System.out.println("_______");
 			}
 		}		
+	}
+	
+	public void mover (int inicio, int destino, boolean roll){
+		
+		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
+				if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
+					System.out.println("error");
+				} else { //torres válidas
+					//Comprueba que no se pone el disco encima de un disco más pequeño
+					//Además hay que tener cuidado con algunas cosas:
+						//Que ocurre cuando el disco que estás cogiendo es inexistente
+						//Que ocurre cuando la torre en la que vas a ponerla está vacía
+					if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {				
+						int disco = 0;
+						disco = extraer(inicio);
+						poner(inicio,destino,disco);
+						System.out.println();
+						System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
+						System.out.println("_______");
+					}
+				}
+				
+		
+	}
+	
+	public void deshacer(){
+		
+		int inicio = placeStack.pop();
+		int destino = takeStack.pop();
+		
+		replaceStack.push(inicio);
+		retakeStack.push(destino);
+		
+		mover(inicio, destino, true);
+		
+		mensaje = 0;
+		
+	}
+	
+	public void rehacer(){
+		
+		int inicio = replaceStack.pop();
+		int destino = retakeStack.pop();
+		
+		placeStack.push(inicio);
+		takeStack.push(destino);
+		
+		mover(inicio, destino, true);
+		
+		mensaje = 0;
+		
 	}
 
 	public void show(){
@@ -111,6 +184,7 @@ public class Torres {
 	 * @param mensajeRecibido
 	 */
 	public static void recibirMensaje(int mensajeRecibido) {
+		
 		mensajeAnterior = mensaje; //mensaje anteriormente recibido
 		mensaje = mensajeRecibido; //mensaje actual obtenido
 	}
@@ -135,6 +209,7 @@ public class Torres {
 		if (mensajePoner()){
 			if (mensajeAnteriorQuitar()){
 				
+				contMovimientos++;
 				int origen = mensajeAnterior;
 				int destino = deMensajeANumPila(mensaje);
 				System.out.println(mensaje+"_"+destino);
@@ -143,8 +218,8 @@ public class Torres {
 				mensajeAnterior = 0;
 				mensaje = 0;
 			}
-			//Otras ociones
 		} else if (mensaje == 7){
+			deshacer();
 		} else if (mensaje == 8) {
 		}
 	}
@@ -225,6 +300,13 @@ public class Torres {
 		}
 		
 		return pila;
+	}
+	
+	
+	public static int movimientosRealizados(){
+		
+		return contMovimientos;
+		
 	}
 	
 	public static void main(String Args[]){
