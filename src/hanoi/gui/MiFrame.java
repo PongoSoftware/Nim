@@ -11,7 +11,7 @@ public class MiFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JPanel ventana;
+	JPanel ventana, botonesDerechos;
 	public MiFrame(String title){
 		super(title);
 		
@@ -28,13 +28,17 @@ public class MiFrame extends JFrame {
 		getContentPane().add(botonesSuperiores, BorderLayout.NORTH);
 		JPanel botonesInferiores= new BotonesInferiores(); 
 		getContentPane().add(botonesInferiores, BorderLayout.SOUTH);
-		JPanel botonesDerechos= new BotonesDerechos(); 
+		botonesDerechos= new BotonesDerechos(); 
 		getContentPane().add(botonesDerechos, BorderLayout.EAST);
 		
 	}
 	
 	public PanelDibujo getVentana(){
 		return  (PanelDibujo) ventana;
+	}
+
+	public void setNumMovimientos(int numMovimientos) {
+		((BotonesDerechos) botonesDerechos).setNumMovimientos(numMovimientos);		
 	}
 	
 

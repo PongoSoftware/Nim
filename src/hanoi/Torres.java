@@ -117,7 +117,6 @@ public class Torres {
 				movimientoHecho = true;
 				System.out.println();
 				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
-				System.out.println("_______");
 			}
 		}	
 		System.out.println(movimientoHecho);
@@ -204,12 +203,6 @@ public class Torres {
 		centerTower.recorrer();
 		rigthTower.recorrer();
 	}
-	
-	public static PanelDibujo crearVentana(){
-		MiFrame frame = new MiFrame("Torres Hanoi");
-		PanelDibujo ventana = frame.getVentana();		
-		return ventana;
-	}
 
 	/** 
 	 * Recibe un mensaje desde la interfaz gráfica
@@ -244,8 +237,6 @@ public class Torres {
 				contMovimientos++;
 				int origen = mensajeAnterior;
 				int destino = deMensajeANumPila(mensaje);
-				System.out.println(mensaje+"_"+destino);
-				System.out.println("movimiento.."+origen+"-"+destino);
 				mover(origen,destino);
 				mensajeAnterior = 0;
 				mensaje = 0;
@@ -273,7 +264,6 @@ public class Torres {
 		
 		//Se comprueba que evento es
 		if (e == 1 ) { //Evento click
-//			System.out.println("click");
 			leftTower.comprobarClick(x,y);
 			centerTower.comprobarClick(x, y);
 			rigthTower.comprobarClick(x, y);
@@ -363,9 +353,14 @@ public class Torres {
 		
 	}
 	
+	public int getNumMovimientos(){
+		return contMovimientos;
+	}
+	
 	public static void main(String Args[]){
-		PanelDibujo ventana = crearVentana();
-		Torres torres = new Torres(3,ventana);
+		MiFrame frame = new MiFrame("Torres Hanoi");
+		PanelDibujo ventana = frame.getVentana();	
+		Torres torres = new Torres(5,ventana);
 		ventana.setTorresHanoi(torres);
 		ventana.repaint();
 		while (true){
@@ -379,6 +374,7 @@ public class Torres {
 				
 				//Con GUI:
 				torres.procesarBotones();
+//				frame.setNumMovimientos(torres.getNumMovimientos());
 				Thread.sleep(205); //28fps
 			} catch (Exception e){
 				//
