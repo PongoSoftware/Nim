@@ -208,7 +208,7 @@ public class Stack {
 	public void comprobarClick(int posx, int posy) {
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
@@ -221,7 +221,7 @@ public class Stack {
 	public void comprobarPresion(int posx, int posy) {
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
@@ -235,7 +235,7 @@ public class Stack {
 		boolean yaHaMovido = false;
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext() && !yaHaMovido){
+			if(elemento.hasNext() && !yaHaMovido){
 				elemento = next(elemento);
 				if (elemento.getPresion()){
 					elemento.setPosicion(x,y);
@@ -246,14 +246,18 @@ public class Stack {
 		return yaHaMovido;
 	}
 
-	public void liberar(int x, int y) {
+	public boolean liberar(int x, int y) {
+		boolean liberacion = false;
 		try{
 			Nodo elemento = new Nodo();
-			while(elemento.hasNext()){
+			if(elemento.hasNext()){
 				elemento = next(elemento);
-				elemento.setPresion(false);
+				if (elemento.getPresion()) {
+					elemento.setPresion(false);
+					liberacion = true;
+				}
 			}
 		} catch (Exception e) {}
-		
+		return liberacion;
 	}
 }

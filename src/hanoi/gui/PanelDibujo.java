@@ -43,9 +43,11 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	public void paintComponent(Graphics g){
 		 super.paintComponent(g);
 		 g.setColor(Color.YELLOW);
+		 //Lineas horizontal
 		 g.fillRect(20,258,208,15);
 		 g.fillRect(240,258,208,15);
 		 g.fillRect(460,258,208,15);
+		 //Varilla
 		 g.fillRect(121,50,10,213);
 		 g.fillRect(341,50,10,213);
 		 g.fillRect(561,50,10,213);
@@ -91,7 +93,7 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		torresHanoi.recibirRaton(4, 0, 0);
+		torresHanoi.recibirRaton(4, e.getX(), e.getY());
 	}
 
 	public void mouseDragged(MouseEvent e) {

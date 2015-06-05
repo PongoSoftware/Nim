@@ -94,7 +94,8 @@ public class Torres {
 	 * @param inicio
 	 * @param destino
 	 */
-	public void mover(int inicio, int destino){
+	public boolean mover(int inicio, int destino){
+		boolean movimientoHecho = false;
 		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
 		if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
 			System.out.println("error");
@@ -103,17 +104,23 @@ public class Torres {
 			//Además hay que tener cuidado con algunas cosas:
 				//Que ocurre cuando el disco que estás cogiendo es inexistente
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
-			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+			if (inicio == destino) { //cuando se hace un movimiento sobre si mismo (por ejemplo desde GUI.
+				int disco = extraer(inicio);
+				poner(inicio,destino,disco);
+			} else if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
 				takeStack.push(inicio);
 				placeStack.push(destino);				
 				int disco = 0;
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
+				movimientoHecho = true;
 				System.out.println();
 				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 				System.out.println("_______");
 			}
-		}		
+		}	
+		System.out.println(movimientoHecho);
+		return movimientoHecho;
 	}
 	
 	public void mover (int inicio, int destino, boolean roll){
@@ -228,7 +235,7 @@ public class Torres {
 	 * Recibe mensajes del ratón desde Swing
 	 * 
 	 * 1 Click
-	 * 2 Muevo
+	 * 2 Presion
 	 * 3 Arrastro
 	 * 4 Libero
 	 * 5 Ratón sale pantalla
@@ -237,16 +244,18 @@ public class Torres {
 	 * @param y
 	 */
 	public void recibirRaton(int e, int x, int y) {
-		if (e == 1 ) {
+		
+		//Se comprueba que evento es
+		if (e == 1 ) { //Evento click
 //			System.out.println("click");
 			leftTower.comprobarClick(x,y);
 			centerTower.comprobarClick(x, y);
 			rigthTower.comprobarClick(x, y);
-		} else if (e == 2) {
+		} else if (e == 2) { //Evento presionar
 			leftTower.comprobarPresion(x,y);
 			centerTower.comprobarPresion(x, y);
 			rigthTower.comprobarPresion(x, y);
-		} else if (e == 3){
+		} else if (e == 3){ //Evento arrastrar
 			boolean yaHaMovido;
 			yaHaMovido = leftTower.arrastra(x,y);
 			if (!yaHaMovido) {
@@ -255,10 +264,29 @@ public class Torres {
 			if (!yaHaMovido) {
 				rigthTower.arrastra(x, y);
 			}
-		} else if (e == 4 || e == 5){
-			leftTower.liberar(x,y);
-			centerTower.liberar(x, y);
-			rigthTower.liberar(x, y);
+		} else if (e == 4 || e == 5){ //Evento liberar y sacar el cursor del panel
+			int origen, destino;
+			origen = destino = 0;
+			if (leftTower.liberar(x,y)) {
+				origen = 1;
+			} else if (	centerTower.liberar(x, y)){
+				origen = 2;
+			} else if (rigthTower.liberar(x, y)){ //importante no poner else para que se ejecute el código
+				origen = 3;
+			}
+			if (240 >= x) {
+				destino = 1;
+			} else if (x > 240 && x < 460){
+				destino = 2;
+			} else {
+				destino = 3;
+			}
+			System.out.println(origen+"_"+destino);
+			if (origen != 0 && destino != 0) {
+				if(!mover(origen,destino)){
+					mover(origen,origen);
+				}
+			}
 		}
 		
 	}
@@ -311,7 +339,7 @@ public class Torres {
 	
 	public static void main(String Args[]){
 		PanelDibujo ventana = crearVentana();
-		Torres torres = new Torres(9,ventana);
+		Torres torres = new Torres(3,ventana);
 		ventana.setTorresHanoi(torres);
 		ventana.repaint();
 		while (true){
