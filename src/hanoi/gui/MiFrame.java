@@ -22,6 +22,7 @@ public class MiFrame extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		ventana = new PanelDibujo(this);
+		ventana.setSize(850,350);
 
 		JPanel botonesSuperiores = new BotonesSuperiores(); 
 		getContentPane().add(botonesSuperiores, BorderLayout.NORTH);

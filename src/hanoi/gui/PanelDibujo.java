@@ -4,6 +4,7 @@ import hanoi.Stack;
 import hanoi.Torres;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,6 +31,9 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 		miFrame.getContentPane().add(this, BorderLayout.CENTER);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+
+//        setBackground(Color.GREEN);
 	}
 	
 	public void setTorresHanoi(Torres torres){
@@ -38,7 +42,14 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	
 	public void paintComponent(Graphics g){
 		 super.paintComponent(g);
-
+		 g.setColor(Color.YELLOW);
+		 g.fillRect(20,258,208,15);
+		 g.fillRect(240,258,208,15);
+		 g.fillRect(460,258,208,15);
+		 g.fillRect(121,50,10,213);
+		 g.fillRect(341,50,10,213);
+		 g.fillRect(561,50,10,213);
+//		 g.fil
 		 if(torre1 != null){
 			 torre1.recorrerGrafico(g);
 		 }

@@ -24,7 +24,7 @@ public class Stack {
 		//Variables gráficas
 		private static final int multiplicador = 22; //Multiplicador utilizado en el calculo de posiciones
 		private static final int xinicial = 75;
-		private static final int  yinicial = 280;
+		private static final int  yinicial = 260;
 		private int x, y, width, height, xwidth, yheight;
 		private Color color;
 		private boolean presionado;
@@ -60,6 +60,8 @@ public class Stack {
 			xwidth = x + width;
 			yheight = y + height;
 			color = new Color(dato*10,dato*10,dato*10);
+			System.out.print(x+"_"+y+"_");
+			System.out.print(xwidth+"_"+yheight+"\n");
 		}
 		
 		/**

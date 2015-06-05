@@ -8,6 +8,7 @@ public class Torres {
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
+	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth, PanelDibujo ventana){
 		leftTower = new Stack(ventana,1);
 		centerTower = new Stack(ventana,2);
@@ -15,8 +16,8 @@ public class Torres {
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
-			//centerTower.push(i);
-			//rigthTower.push(i);
+//			centerTower.push(i);
+//			rigthTower.push(i);
 		}
 		ventana.setTorre1(leftTower);
 		ventana.setTorre2(centerTower);
