@@ -102,7 +102,8 @@ public class Torres {
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
 			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
 				takeStack.push(inicio);
-				placeStack.push(destino);				
+				placeStack.push(destino);	
+				borrarRehacer();
 				int disco = 0;
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
@@ -113,7 +114,7 @@ public class Torres {
 		}		
 	}
 	
-	public void mover (int inicio, int destino, boolean roll){
+	public void mover (int inicio, int destino, boolean roll){ // Este es el movimiento propio de los Deshacer y Rehacer
 		
 		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
 				if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
@@ -137,14 +138,18 @@ public class Torres {
 	}
 	
 	public void deshacer(){
+
+		if(placeStack.get() != Integer.MAX_VALUE && takeStack.get() != Integer.MAX_VALUE){
 		
-		int inicio = placeStack.pop();
-		int destino = takeStack.pop();
+			int inicio = placeStack.pop();
+			int destino = takeStack.pop();
+			
+			replaceStack.push(destino);
+			retakeStack.push(inicio);
+			
+			mover(inicio, destino, true);
 		
-		replaceStack.push(inicio);
-		retakeStack.push(destino);
-		
-		mover(inicio, destino, true);
+		}
 		
 		mensaje = 0;
 		
@@ -152,15 +157,35 @@ public class Torres {
 	
 	public void rehacer(){
 		
-		int inicio = replaceStack.pop();
-		int destino = retakeStack.pop();
+		if(replaceStack.get() != Integer.MAX_VALUE && retakeStack.get() != Integer.MAX_VALUE){
 		
-		placeStack.push(inicio);
-		takeStack.push(destino);
-		
-		mover(inicio, destino, true);
+			int inicio = replaceStack.pop();
+			int destino = retakeStack.pop();
+			
+			placeStack.push(destino);
+			takeStack.push(inicio);
+			
+			mover(inicio, destino, true);
+			
+		}
 		
 		mensaje = 0;
+		
+	}
+	
+	public void borrarRehacer(){
+		
+		while(replaceStack.get() != Integer.MAX_VALUE){
+			
+			replaceStack.pop();
+			
+		}
+		
+		while(retakeStack.get() != Integer.MAX_VALUE){
+			
+			retakeStack.pop();
+			
+		}
 		
 	}
 
@@ -218,6 +243,7 @@ public class Torres {
 		} else if (mensaje == 7){
 			deshacer();
 		} else if (mensaje == 8) {
+			rehacer();
 		}
 	}
 	
