@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 public class BotonesSuperiores extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnQuitar1, btnQuitar2, btnQuitar3;
 
 	/**

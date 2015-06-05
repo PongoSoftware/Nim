@@ -3,16 +3,11 @@ package hanoi;
 import hanoi.gui.MiFrame;
 import hanoi.gui.PanelDibujo;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-
 public class Torres {
-	private static int mensaje, mensajeAnterior, mensajeClick;
+	private static int mensaje, mensajeAnterior;
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
-	private static int posx, posy;
 	public Torres(int higth, PanelDibujo ventana){
 		leftTower = new Stack(ventana,1);
 		centerTower = new Stack(ventana,2);
@@ -74,22 +69,7 @@ public class Torres {
 		}	
 		return valor;
 	}
-	
-	private int mandarPosicion(int torre, int x, int y){
-		int valor = Integer.MAX_VALUE;
-		switch(torre){
-		case 1:
-			leftTower.recibePosicion(x,y);
-			break;
-		case 2:
-			centerTower.recibePosicion(x,y);
-			break;
-		case 3:
-			rigthTower.recibePosicion(x,y);
-			break;
-		}	
-		return valor;	}
-	
+		
 	/**
 	 * Ejecuta el movimiento entre las pilas
 	 * @param inicio
@@ -169,6 +149,8 @@ public class Torres {
 	}
 	
 	/**
+	 * Recibe mensajes del ratón desde Swing
+	 * 
 	 * 1 Click
 	 * 2 Muevo
 	 * 3 Arrastro
@@ -179,8 +161,6 @@ public class Torres {
 	 * @param y
 	 */
 	public void recibirRaton(int e, int x, int y) {
-		posx = x;
-		posy = y;
 		if (e == 1 ) {
 //			System.out.println("click");
 			leftTower.comprobarClick(x,y);
@@ -204,11 +184,6 @@ public class Torres {
 			centerTower.liberar(x, y);
 			rigthTower.liberar(x, y);
 		}
-		
-	}
-	
-	private void comprobarClick() {
-		leftTower.comprobarClick(posx,posy); 
 		
 	}
 
@@ -273,25 +248,4 @@ public class Torres {
 			}
 		}
 	}
-	/*public static void main(String Args[]){
-//		PanelDibujo ventana = crearVentana();
-		Torres torres = new Torres(9,ventana);
-//		ventana.repaint();
-		while (true){
-			try {
-				torres.show();
-				ventana.repaint();
-				//COn consola:
-				//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
-				//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
-				//torres.mover(origen, destino);	
-				
-				//Con GUI:
-				torres.procesarBotones();
-				Thread.sleep(35);
-			} catch (Exception e){
-				//
-			}
-		}
-	}*/
 }

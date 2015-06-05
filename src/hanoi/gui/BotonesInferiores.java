@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 public class BotonesInferiores extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnPoner1, btnPoner2, btnPoner3;
 
 	/**

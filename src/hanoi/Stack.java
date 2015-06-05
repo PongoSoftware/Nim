@@ -9,13 +9,10 @@ public class Stack {
 	private Nodo raiz;
 	private int lastRow = 0;
 	private int numTorre;
-	private PanelDibujo ventana;
-	private static int posex, posey;
 	
 	public Stack(PanelDibujo ventana, int i){
 		raiz = null;
 		this.numTorre = i;
-		this.ventana = ventana;
 	}
 	
 	public class Nodo {
@@ -51,6 +48,9 @@ public class Stack {
 			g.fillRect(x,y,width, height);		
 		}
 		
+		/**
+		 * Calcula la posición en pantalla del elemento
+		 */
 		public void calcularPosiciones(){
 			//calcular posiciones en pantalla			
 			width = dato * multiplicador;
@@ -62,6 +62,12 @@ public class Stack {
 			color = new Color(dato*10,dato*10,dato*10);
 		}
 		
+		/**
+		 * Fijar una posición en pantalla del elemnto
+		 * 
+		 * @param x
+		 * @param y
+		 */
 		public void setPosicion(int x, int y){
 			this.x = x;
 			this.y = y;
@@ -69,10 +75,14 @@ public class Stack {
 			this.yheight = this.y + this.height;
 		}
 
-		//Compruebo que se haya hecho click sobre él.
+		/**
+		 * Compruebo si las posiciones que se reciben concuerdan con las posiciones del elemtno
+		 * @param x
+		 * @param y
+		 * @return
+		 */
 		public boolean comprobarPosicion(int x, int y){
 			if (this.x <= x && this.xwidth >= x){
-				System.out.println(this.y+"-"+y+"_"+this.yheight);
 				if (this.y <= y && this.yheight >= y){
 					return true;
 				} else {
@@ -82,9 +92,17 @@ public class Stack {
 				return false;
 			}			
 		}
+		/**
+		 * Se establece si está presionado o no el elemento.
+		 * @param b
+		 */
 		public void setPresion(boolean b) {
 			presionado = b;			
-		}		
+		}	
+		/**
+		 * Obtiene si está presionado o no el elemento.
+		 * @return
+		 */
 		public boolean getPresion(){
 			return presionado;
 		}
@@ -98,7 +116,6 @@ public class Stack {
 			if (raiz==null){
 				nuevo.sig = null;
 				raiz = nuevo;	
-				//System.out.print("He hecho un push "+nuevo.dato);
 			} else {
 				nuevo.sig = raiz;
 				raiz = nuevo;
@@ -120,7 +137,6 @@ public class Stack {
 				lastRow--;
 				return informacion;
 		} else {
-			//return Integer.MAX_VALUE;
 			return 0;
 		}		
 	}
@@ -146,11 +162,8 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-				//System.out.println("TORRE "+numTorre+" Pinta el elemento "+elemento.dato+"_numero de pisos de la torre"+lastRow);
 			}
-		} catch (Exception e) {
-			//System.out.println("No hay elementos en la torre "+numTorre);
-		}
+		} catch (Exception e) {	}
 	}
 	
 	/*
@@ -184,17 +197,11 @@ public class Stack {
 		System.out.println();
 	}
 
-	public void recibePosicion(int x, int y) {
-		posex = x;
-		posey = x;		
-	}
-
 	public void comprobarClick(int posx, int posy) {
 		try{
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-//				System.out.println("pruebo click");
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
 				}
@@ -208,7 +215,6 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-//				System.out.println("pruebo click");
 				if(elemento.comprobarPosicion(posx, posy)){
 					elemento.setPresion(true);
 				}

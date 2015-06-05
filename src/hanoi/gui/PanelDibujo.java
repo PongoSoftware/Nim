@@ -1,22 +1,22 @@
 package hanoi.gui;
 
 import hanoi.Stack;
-import hanoi.Stack.Nodo;
 import hanoi.Torres;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.JPanel;
 
 public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Stack torre1;
 	private Stack torre2;
 	private Stack torre3;
@@ -71,53 +71,31 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 		
 	}
 
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-//		System.out.println("entered");
-	}
-
 	public void mouseExited(MouseEvent e) {
 		torresHanoi.recibirRaton(5,e.getX(),e.getY());
 	}
 
 	public void mousePressed(MouseEvent e) {
 		torresHanoi.recibirRaton(2,e.getX(),e.getY());
-//		if(disco.comprobarPosicion(e.getX(),e.getY())){
-//			disco.estaPresionado = true;
-//		}
-//		System.out.println(e.getX()+"_"+e.getY());
-//		variable = "Presionado";
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		torresHanoi.recibirRaton(4, 0, 0);
-		// TODO Auto-generated method stub
-//		if (disco.estaPresionado) {
-//			disco.estaPresionado = false;
-//			System.out.println("libera");
-//		}
-//		variable = "libero";
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		torresHanoi.recibirRaton(3,e.getX(),e.getY());
+		torresHanoi.recibirRaton(3,e.getX(),e.getY());		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		/*if (disco.estaPresionado) {
-			disco.setPosicion(e.getX(), e.getY());
-		}*/
-//		if (variable != null){
-//		if (!variable.equals("click")){
-//			variable = "arrastro";
-//		}} else {
-//			variable = "arrastro";
-//		}
 		
 	}
-	public void mouseMoved(MouseEvent e) {
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		//System.out.println("move");
 		
-	}
-	
+	}	
 }
