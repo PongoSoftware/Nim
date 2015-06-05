@@ -13,7 +13,8 @@ public class Torres {
 	Stack centerTower;
 	Stack rigthTower;
 	
-	private Stack movesStack; // ----------- Pila de movimientos realizados
+	private Stack takeStack; // ----------- Pila de movimientos realizados
+	private Stack placeStack;
 	
 	private static int contMovimientos = 0;
 	
@@ -22,7 +23,8 @@ public class Torres {
 		centerTower = new Stack(ventana,2);
 		rigthTower = new Stack(ventana,3);
 		
-		movesStack = new Stack();
+		takeStack = new Stack();
+		placeStack = new Stack();
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
@@ -35,7 +37,8 @@ public class Torres {
 		
 	}
 	
-	private int extraer(int inicio){
+	private int extraer(int inicio){ // No es útli de momento, porque registra todos los movimientos, incluso los de 
+									// rollback D:
 		int disco = 0;
 		switch(inicio){
 		case 1:
@@ -96,6 +99,8 @@ public class Torres {
 				//Que ocurre cuando el disco que estás cogiendo es inexistente
 				//Que ocurre cuando la torre en la que vas a ponerla está vacía
 			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+				takeStack.push(inicio);
+				placeStack.push(destino);				
 				int disco = 0;
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
@@ -104,6 +109,38 @@ public class Torres {
 				System.out.println("_______");
 			}
 		}
+		
+	}
+	
+	public void mover (int inicio, int destino, boolean roll){
+		
+		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
+				if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
+					System.out.println("error");
+				} else { //torres válidas
+					//Comprueba que no se pone el disco encima de un disco más pequeño
+					//Además hay que tener cuidado con algunas cosas:
+						//Que ocurre cuando el disco que estás cogiendo es inexistente
+						//Que ocurre cuando la torre en la que vas a ponerla está vacía
+					if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {				
+						int disco = 0;
+						disco = extraer(inicio);
+						poner(inicio,destino,disco);
+						System.out.println();
+						System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
+						System.out.println("_______");
+					}
+				}
+				
+		
+	}
+	
+	public void deshacer(){
+		
+		int inicio = placeStack.pop();
+		int destino = takeStack.pop();
+		
+		mover(inicio, destino, true);
 		
 	}
 
