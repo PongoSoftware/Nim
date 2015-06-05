@@ -31,11 +31,14 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	private JButton btnAtras, btnAdelante, btnNuevo;
 	private JTextField textNum, textContador;
 	private int numMovimientos;
+	private int numDiscos;
 
 	/**
 	 * Create the panel.
 	 */
 	public BotonesDerechos() {
+		
+		numMovimientos = Torres.getNumDiscos();
 
 		setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.GREEN);
@@ -53,22 +56,23 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 		btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(this);
 		
-//		JLabel labelMovimientos = new JLabel();
-//		labelMovimientos.setText("d");
+		JLabel labelMovimientos = new JLabel();
+		labelMovimientos.setText("Número de movimientos: ");
 		
 		textContador = new JTextField();
-		textContador.setText("0");
-		textContador.setColumns(2);
-//		
+		textContador.setText(""+numMovimientos);
+		textContador.setColumns(3);
+		
 		textNum = new JTextField();
-		textNum.setText("2");
+		textNum.setText(""+numDiscos);
 		textNum.setColumns(2);
 		
-		btnNuevo = new JButton("Nuevo");
+		btnNuevo = new JButton("Nuevo");		
+		btnNuevo.addActionListener(this);
 		
 		panelNorte.add(btnAtras);
 		panelNorte.add(btnAdelante);	
-//		panelCentro.add(labelMovimientos);
+		panelCentro.add(labelMovimientos);
 		panelCentro.add(textContador);
 		panelSur.add(textNum);
 		panelSur.add(btnNuevo);
@@ -79,11 +83,24 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 			Torres.recibirMensaje(7);
 		} else if (e.getSource()==btnAdelante) {
 			Torres.recibirMensaje(8);
-		} 
+		} else if (e.getSource()==btnNuevo){
+			System.out.println("btn nuevo");
+			Torres.setNuevoJuego(true);
+			int num = Integer.parseInt(textNum.getText());
+			Torres.setNumDiscos(num);
+		}
 	}
 
 	public void setNumMovimientos(int numMovimientos) {
 		this.numMovimientos = numMovimientos;
-//		textContador.setText(""+numMovimientos);
+		textContador.setText(""+numMovimientos);
+	}
+
+	public int getNumDiscos() {
+		return numDiscos;
+	}
+
+	public void setNumDiscos(int numDiscos) {
+		this.numDiscos = numDiscos;		
 	}
 }

@@ -1,5 +1,7 @@
 package hanoi;
 
+import javax.swing.JTextField;
+
 import hanoi.gui.MiFrame;
 import hanoi.gui.PanelDibujo;
 
@@ -16,8 +18,10 @@ public class Torres {
 	
 	private Stack retakeStack;
 	private Stack replaceStack;
+	private static boolean nuevoJuego = false;
 	
 	private static int contMovimientos = 0;
+	private static int numDiscos;
 	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth, PanelDibujo ventana){
@@ -353,32 +357,59 @@ public class Torres {
 		
 	}
 	
-	public int getNumMovimientos(){
+	public static int getNumMovimientos(){
 		return contMovimientos;
 	}
 	
+	public static void setNuevoJuego(boolean b){
+		nuevoJuego = b;
+	}
+	
+	public boolean getNuevoJuego(){
+		return nuevoJuego;
+	}
+	
 	public static void main(String Args[]){
+		boolean nuevoJuego = true;
 		MiFrame frame = new MiFrame("Torres Hanoi");
 		PanelDibujo ventana = frame.getVentana();	
-		Torres torres = new Torres(5,ventana);
-		ventana.setTorresHanoi(torres);
-		ventana.repaint();
-		while (true){
-			try {
-				torres.show();
-				ventana.repaint();
-				//COn consola:
-				//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
-				//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
-				//torres.mover(origen, destino);	
-				
-				//Con GUI:
-				torres.procesarBotones();
-//				frame.setNumMovimientos(torres.getNumMovimientos());
-				Thread.sleep(205); //28fps
-			} catch (Exception e){
-				//
-			}
+		int numDiscos = 5;
+		while (nuevoJuego){			
+			Torres torres = new Torres(numDiscos,ventana);
+			ventana.setTorresHanoi(torres);
+			frame.setNumDiscos(numDiscos);
+			frame.paintAll(frame.getGraphics());
+			do{
+				nuevoJuego = false;
+				try {
+					torres.show();
+					ventana.repaint();
+					//COn consola:
+					//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
+					//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
+					//torres.mover(origen, destino);	
+					
+					//Con GUI:
+					torres.procesarBotones();
+					frame.setNumMovimientos(torres.getNumMovimientos());
+//					nuevoJuego = torres.getNuevoJuego();
+					if (nuevoJuego){
+						numDiscos = frame.getNumDiscos();
+						System.out.println("__");
+					}
+					Thread.sleep(205); //28fps
+				} catch (Exception e){
+					//
+				}
+			}while (!nuevoJuego);
 		}
+	}
+
+	public static void setNumDiscos(int num) {
+		numDiscos = num;
+	}
+
+	public static int getNumDiscos() {
+		return numDiscos;
 	}
 }

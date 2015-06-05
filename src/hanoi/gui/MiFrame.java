@@ -40,6 +40,15 @@ public class MiFrame extends JFrame {
 	public void setNumMovimientos(int numMovimientos) {
 		((BotonesDerechos) botonesDerechos).setNumMovimientos(numMovimientos);		
 	}
+
+	public int getNumDiscos() {
+		return ((BotonesDerechos) botonesDerechos).getNumDiscos();
+	}
+
+	public void setNumDiscos(int numDiscos) {
+		((BotonesDerechos) botonesDerechos).setNumDiscos(numDiscos);
+		
+	}
 	
 
 }

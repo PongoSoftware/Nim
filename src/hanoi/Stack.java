@@ -66,8 +66,6 @@ public class Stack {
 			xwidth = x + width;
 			yheight = y + height;
 			color = new Color(dato*10,dato*10,dato*10);
-			System.out.print(x+"_"+y+"_");
-			System.out.print(xwidth+"_"+yheight+"\n");
 		}
 		
 		/**
