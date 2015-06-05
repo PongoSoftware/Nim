@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 
 public class BotonesDerechos extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnAtras, btnAdelante;
 
 	/**
@@ -32,7 +36,6 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnAtras) {
 			Torres.recibirMensaje(7);
-			System.out.println("Pulso botón atrás");
 		} else if (e.getSource()==btnAdelante) {
 			Torres.recibirMensaje(8);
 		} 

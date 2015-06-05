@@ -1,21 +1,26 @@
 package hanoi.gui;
 
 import hanoi.Stack;
-import hanoi.Stack.Nodo;
+import hanoi.Torres;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-public class PanelDibujo extends JPanel {
+public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Stack torre1;
 	private Stack torre2;
 	private Stack torre3;
+	private Torres torresHanoi;
 
 	/**
 	 * Create the panel.
@@ -23,11 +28,17 @@ public class PanelDibujo extends JPanel {
 	 */
 	public PanelDibujo(MiFrame miFrame) {
 		miFrame.getContentPane().add(this, BorderLayout.CENTER);
+		addMouseListener(this);
+		addMouseMotionListener(this);
+	}
+	
+	public void setTorresHanoi(Torres torres){
+		torresHanoi = torres;
 	}
 	
 	public void paintComponent(Graphics g){
 		 super.paintComponent(g);
-		 
+
 		 if(torre1 != null){
 			 torre1.recorrerGrafico(g);
 		 }
@@ -54,4 +65,37 @@ public class PanelDibujo extends JPanel {
 	public void repaint(){
 		super.repaint();
 	}
+
+	public void mouseClicked(MouseEvent e) {
+		torresHanoi.recibirRaton(1,e.getX(),e.getY());
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		torresHanoi.recibirRaton(5,e.getX(),e.getY());
+	}
+
+	public void mousePressed(MouseEvent e) {
+		torresHanoi.recibirRaton(2,e.getX(),e.getY());
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		torresHanoi.recibirRaton(4, 0, 0);
+	}
+
+	public void mouseDragged(MouseEvent e) {
+		torresHanoi.recibirRaton(3,e.getX(),e.getY());		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

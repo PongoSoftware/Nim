@@ -3,10 +3,6 @@ package hanoi;
 import hanoi.gui.MiFrame;
 import hanoi.gui.PanelDibujo;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-
 public class Torres {
 	private static int mensaje, mensajeAnterior;
 	Stack leftTower;
@@ -86,7 +82,7 @@ public class Torres {
 		}	
 		return valor;
 	}
-	
+		
 	/**
 	 * Ejecuta el movimiento entre las pilas
 	 * @param inicio
@@ -111,8 +107,7 @@ public class Torres {
 				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 				System.out.println("_______");
 			}
-		}
-		
+		}		
 	}
 	
 	public void mover (int inicio, int destino, boolean roll){
@@ -188,6 +183,8 @@ public class Torres {
 		mensaje = mensajeRecibido; //mensaje actual obtenido
 	}
 	
+	
+	
 	/**
 	 * Procesa los mensajes recibidos
 	 * 
@@ -200,7 +197,6 @@ public class Torres {
 	 * 6 Poner en torre 3
 	 * 7 Pulsar el botón atrás
 	 * 8 Pulsar el botón adelante
-	 * 
 	 */
 	public void procesarBotones(){
 		//Opciones de quitar y poner
@@ -216,19 +212,51 @@ public class Torres {
 				mensajeAnterior = 0;
 				mensaje = 0;
 			}
-			//Otras ociones
-		} else {
-			switch(mensaje){
-			case 7:
-				
-				deshacer();
-				
-				break;
-			case 8:
-				break;
-			}
+		} else if (mensaje == 7){
+			deshacer();
+		} else if (mensaje == 8) {
 		}
 	}
+	
+	/**
+	 * Recibe mensajes del ratón desde Swing
+	 * 
+	 * 1 Click
+	 * 2 Muevo
+	 * 3 Arrastro
+	 * 4 Libero
+	 * 5 Ratón sale pantalla
+	 * @param e
+	 * @param x
+	 * @param y
+	 */
+	public void recibirRaton(int e, int x, int y) {
+		if (e == 1 ) {
+//			System.out.println("click");
+			leftTower.comprobarClick(x,y);
+			centerTower.comprobarClick(x, y);
+			rigthTower.comprobarClick(x, y);
+		} else if (e == 2) {
+			leftTower.comprobarPresion(x,y);
+			centerTower.comprobarPresion(x, y);
+			rigthTower.comprobarPresion(x, y);
+		} else if (e == 3){
+			boolean yaHaMovido;
+			yaHaMovido = leftTower.arrastra(x,y);
+			if (!yaHaMovido) {
+				yaHaMovido = centerTower.arrastra(x, y);
+			}
+			if (!yaHaMovido) {
+				rigthTower.arrastra(x, y);
+			}
+		} else if (e == 4 || e == 5){
+			leftTower.liberar(x,y);
+			centerTower.liberar(x, y);
+			rigthTower.liberar(x, y);
+		}
+		
+	}
+
 	/**
 	 * Comprueba si se ha recibido un mensaje de poner
 	 * 
@@ -278,6 +306,7 @@ public class Torres {
 	public static void main(String Args[]){
 		PanelDibujo ventana = crearVentana();
 		Torres torres = new Torres(9,ventana);
+		ventana.setTorresHanoi(torres);
 		ventana.repaint();
 		while (true){
 			try {
@@ -290,7 +319,7 @@ public class Torres {
 				
 				//Con GUI:
 				torres.procesarBotones();
-				Thread.sleep(35);
+				Thread.sleep(205); //28fps
 			} catch (Exception e){
 				//
 			}
