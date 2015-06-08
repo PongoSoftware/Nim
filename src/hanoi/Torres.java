@@ -120,11 +120,11 @@ public class Torres {
 				disco = extraer(inicio);
 				poner(inicio,destino,disco);
 				movimientoHecho = true;
-				System.out.println();
-				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
+//				System.out.println();
+//				System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 			}
 		}	
-		System.out.println(movimientoHecho);
+//		System.out.println(movimientoHecho);
 		return movimientoHecho;
 	}
 	
@@ -142,9 +142,9 @@ public class Torres {
 						int disco = 0;
 						disco = extraer(inicio);
 						poner(inicio,destino,disco);
-						System.out.println();
-						System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
-						System.out.println("_______");
+//						System.out.println();
+//						System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
+//						System.out.println("_______");
 					}
 				}
 				
@@ -305,7 +305,7 @@ public class Torres {
 			} else {
 				destino = 3;
 			}
-			System.out.println(origen+"_"+destino);
+//			System.out.println(origen+"_"+destino);
 			if (origen != 0 && destino != 0) {
 				if(!mover(origen,destino)){
 					mover(origen,origen);
@@ -378,7 +378,8 @@ public class Torres {
 		MiFrame frame = new MiFrame("Torres Hanoi");
 		PanelDibujo ventana = frame.getVentana();	
 		numDiscos = 5;
-		while (nuevoJuego){			
+		while (nuevoJuego){	
+			contMovimientos = 0;
 			Torres torres = new Torres(numDiscos,ventana);
 			ventana.setTorresHanoi(torres);
 			frame.setNumDiscos(numDiscos);
@@ -399,9 +400,9 @@ public class Torres {
 //					nuevoJuego = torres.getNuevoJuego();
 					if (nuevoJuego){
 //						numDiscos = frame.getNumDiscos();
-						System.out.println("__");
+//						System.out.println("__");
 					}
-					Thread.sleep(205); //28fps
+					Thread.sleep(36); //36 ~= 28fps
 				} catch (Exception e){
 					//
 				}

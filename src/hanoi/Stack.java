@@ -65,7 +65,7 @@ public class Stack {
 			y = yinicial - (piso * multiplicador);
 			xwidth = x + width;
 			yheight = y + height;
-			color = new Color(dato*10,dato*10,dato*10);
+			color = new Color(186,58,148);
 		}
 		
 		/**

@@ -42,7 +42,8 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	
 	public void paintComponent(Graphics g){
 		 super.paintComponent(g);
-		 g.setColor(Color.YELLOW);
+		 Color color = new Color(109,220,92);
+		 g.setColor(color);
 		 //Lineas horizontal
 		 g.fillRect(20,258,208,15);
 		 g.fillRect(240,258,208,15);

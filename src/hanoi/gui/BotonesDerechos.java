@@ -110,6 +110,7 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 			numDiscos = 9;
 		} else if (numDiscos < 1) {
 			numDiscos = 1;
-		}		
+		}	
+		textNum.setText(""+numDiscos);
 	}
 }
