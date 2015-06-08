@@ -84,10 +84,9 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 		} else if (e.getSource()==btnAdelante) {
 			Torres.recibirMensaje(8);
 		} else if (e.getSource()==btnNuevo){
-			System.out.println("btn nuevo");
+			setNumDiscos(Integer.parseInt(textNum.getText()));
+			Torres.setNumDiscos(numDiscos);
 			Torres.setNuevoJuego(true);
-			int num = Integer.parseInt(textNum.getText());
-			Torres.setNumDiscos(num);
 		}
 	}
 
@@ -97,10 +96,20 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	}
 
 	public int getNumDiscos() {
+		if (numDiscos > 9){
+			numDiscos = 9;
+		} else if (numDiscos < 1) {
+			numDiscos = 1;
+		}
 		return numDiscos;
 	}
 
-	public void setNumDiscos(int numDiscos) {
-		this.numDiscos = numDiscos;		
+	public void setNumDiscos(int num) {
+		this.numDiscos = num;
+		if (numDiscos > 9){
+			numDiscos = 9;
+		} else if (numDiscos < 1) {
+			numDiscos = 1;
+		}		
 	}
 }

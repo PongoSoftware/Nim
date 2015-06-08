@@ -370,10 +370,10 @@ public class Torres {
 	}
 	
 	public static void main(String Args[]){
-		boolean nuevoJuego = true;
+		nuevoJuego = true;
 		MiFrame frame = new MiFrame("Torres Hanoi");
 		PanelDibujo ventana = frame.getVentana();	
-		int numDiscos = 5;
+		numDiscos = 5;
 		while (nuevoJuego){			
 			Torres torres = new Torres(numDiscos,ventana);
 			ventana.setTorresHanoi(torres);
@@ -394,7 +394,7 @@ public class Torres {
 					frame.setNumMovimientos(torres.getNumMovimientos());
 //					nuevoJuego = torres.getNuevoJuego();
 					if (nuevoJuego){
-						numDiscos = frame.getNumDiscos();
+//						numDiscos = frame.getNumDiscos();
 						System.out.println("__");
 					}
 					Thread.sleep(205); //28fps
