@@ -24,10 +24,10 @@ public class Torres {
 	private static int numDiscos;
 	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
-	public Torres(int higth, PanelDibujo ventana){
-		leftTower = new Stack(ventana,1);
-		centerTower = new Stack(ventana,2);
-		rigthTower = new Stack(ventana,3);
+	public Torres(int higth){
+		leftTower = new Stack(1);
+		centerTower = new Stack(2);
+		rigthTower = new Stack(3);
 		
 		takeStack = new Stack();
 		placeStack = new Stack();
@@ -40,10 +40,12 @@ public class Torres {
 //			centerTower.push(i);
 //			rigthTower.push(i);
 		}
+	}
+	public Torres(int higth, PanelDibujo ventana){
+		this(higth);
 		ventana.setTorre1(leftTower);
 		ventana.setTorre2(centerTower);
 		ventana.setTorre3(rigthTower);
-		
 	}
 	
 	private int extraer(int inicio){ // No es útli de momento, porque registra todos los movimientos, incluso los de 
@@ -372,6 +374,31 @@ public class Torres {
 	public boolean getNuevoJuego(){
 		return nuevoJuego;
 	}
+
+	public static void setNumDiscos(int num) {
+		numDiscos = num;
+	}
+
+	public static int getNumDiscos() {
+		return numDiscos;
+	}
+	
+	public int getLastRow(int torre){
+		int lastRow = Integer.MAX_VALUE;
+		switch(torre){
+		case 1:
+			lastRow = leftTower.getLastRow();
+			break;
+		case 2:
+			lastRow = centerTower.getLastRow();
+			break;
+		case 3:
+			lastRow = rigthTower.getLastRow();
+			break;
+		}
+		
+		return lastRow;
+	}
 	
 	public static void main(String Args[]){
 		nuevoJuego = true;
@@ -387,7 +414,7 @@ public class Torres {
 			do{
 				nuevoJuego = false;
 				try {
-					torres.show();
+//					torres.show();
 					ventana.repaint();
 					//COn consola:
 					//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
@@ -408,13 +435,5 @@ public class Torres {
 				}
 			}while (!nuevoJuego);
 		}
-	}
-
-	public static void setNumDiscos(int num) {
-		numDiscos = num;
-	}
-
-	public static int getNumDiscos() {
-		return numDiscos;
 	}
 }

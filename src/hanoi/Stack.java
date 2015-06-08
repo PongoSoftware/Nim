@@ -10,7 +10,7 @@ public class Stack {
 	private int lastRow = 0;
 	private int numTorre;
 	
-	public Stack(PanelDibujo ventana, int i){
+	public Stack(int i){
 		raiz = null;
 		this.numTorre = i;
 	}
@@ -163,11 +163,15 @@ public class Stack {
 		return elemento.sig;
 	}
 	
+	/**
+	 * Recorrer la pila y muestra por consola
+	 */
 	public void recorrer(){
 		try{
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
+				System.out.println("Torre "+numTorre+"_"+elemento.dato);
 			}
 		} catch (Exception e) {	}
 	}
@@ -257,5 +261,9 @@ public class Stack {
 			}
 		} catch (Exception e) {}
 		return liberacion;
+	}
+	
+	public int getLastRow(){
+		return lastRow;
 	}
 }
