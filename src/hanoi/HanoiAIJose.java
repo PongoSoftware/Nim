@@ -6,12 +6,15 @@ import hanoi.gui.PanelDibujo;
 public class HanoiAIJose {
 
 	int[] p = new int[3];
-	int origen, destino, numTorres;
+	int origen, destino, numTorres, intentosPasos;
 	Torres torres;
+	boolean error;
 	public HanoiAIJose(Torres torres){
 		this.torres = torres;		
 		origen = 1;
 		numTorres = 3;
+		intentosPasos = 0;
+		error = false;
 	}
 	public void paso(){
 		destino = calcularDestino(torres.get(origen),origen);
@@ -26,6 +29,21 @@ public class HanoiAIJose {
 				System.out.println("Destion"+destino);
 				torres.mover(origen, destino);
 			}
+		}
+	}
+	
+	public void paso2(){
+		destino = calcularDestino(torres.get(origen),origen);
+		if (intentosPasos < numTorres) {
+			if(!torres.mover(origen, destino)){
+				intentosPasos++;
+				origenAumentar();
+				paso2();
+			} else {
+				intentosPasos = 0;
+			}
+		} else {
+			error = true;
 		}
 	}
 	public int calcularDestino(int disco, int origen){
@@ -105,6 +123,10 @@ public class HanoiAIJose {
 			ventana.repaint();
 		}
 	}
+	
+	public boolean error(){
+		return error;
+	}
 
 	public static void conTexto(){ //¡Funciona!
 		Torres torres = new Torres(5);
@@ -113,10 +135,11 @@ public class HanoiAIJose {
 		boolean repetirBucle = true;
 		while(repetirBucle){
 			torres.show();		
-			ai.paso();
+			ai.paso2();
 			System.out.println(torres.getLastRow(1)+"_"+torres.getLastRow(2));
 			if((torres.getLastRow(1) == 0 || torres.getLastRow(1) == Integer.MAX_VALUE ) && 
-				(torres.getLastRow(2) == 0 || torres.getLastRow(2) == Integer.MAX_VALUE )){
+				(torres.getLastRow(2) == 0 || torres.getLastRow(2) == Integer.MAX_VALUE ) &&
+				!ai.error()){
 				repetirBucle = false;
 			}
 		}
