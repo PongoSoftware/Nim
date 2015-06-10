@@ -50,10 +50,7 @@ public class MiFrame extends JFrame {
 		
 	}
 
-	public void setMaxMovimientos(int minMovimientos) {
+	public void setMinMovimientos(int minMovimientos) {
 		((BotonesDerechos) botonesDerechos).setMinMovimientos(minMovimientos);
-		
 	}
-	
-
 }

@@ -1,5 +1,6 @@
 package hanoi.gui;
 
+import hanoi.HanoiMain;
 import hanoi.Torres;
 
 import java.awt.Color;
@@ -28,8 +29,9 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton btnAtras, btnAdelante, btnNuevo;
+	private JButton btnAtras, btnAdelante, btnNuevo, btnAutoresolver;
 	private JTextField textNum, textContador;
+	private JLabel labelMinMovimientos;
 	private int numMovimientos;
 	private int numDiscos;
 	private int minMovimientos;
@@ -39,7 +41,7 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	 */
 	public BotonesDerechos() {
 		
-		numMovimientos = Torres.getNumDiscos();
+		numMovimientos = HanoiMain.getNumDiscos();
 
 		setLayout(new BorderLayout(0, 0));
 		this.setBackground(Color.GREEN);
@@ -51,7 +53,7 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 		add(panelCentro, BorderLayout.CENTER);
 		add(panelSur,BorderLayout.SOUTH);
 		
-		JLabel labelMinMovimientos = new JLabel();
+		labelMinMovimientos = new JLabel();
 		panelSur.add(labelMinMovimientos);
 		labelMinMovimientos.setText("de un mínimo de "+minMovimientos);
 		
@@ -81,8 +83,9 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 			JPanel filaCentro = new JPanel();
 			panelCentro.add(filaCentro, BorderLayout.CENTER);
 			
-			JButton autoresolver = new JButton("Iniciar/Parar Autoresolver");
-			filaCentro.add(autoresolver);
+			btnAutoresolver = new JButton("Iniciar/Parar Autoresolver");
+			filaCentro.add(btnAutoresolver);
+			btnAutoresolver.addActionListener(this);
 			
 			JPanel filaInferior = new JPanel();
 			panelCentro.add(filaInferior,BorderLayout.SOUTH);
@@ -104,8 +107,12 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 			Torres.recibirMensaje(8);
 		} else if (e.getSource()==btnNuevo){
 			setNumDiscos(Integer.parseInt(textNum.getText()));
-			Torres.setNumDiscos(numDiscos);
-			Torres.setNuevoJuego(true);
+			HanoiMain.setNumDiscos(numDiscos);
+			HanoiMain.setNuevoJuego(true);
+			System.out.println("__");
+		} else if (e.getSource()==btnAutoresolver) {
+			HanoiMain.switchAutorresolver();
+		} else {
 		}
 	}
 
@@ -135,6 +142,7 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 
 	public void setMinMovimientos(int minMovimientos) {
 		this.minMovimientos = minMovimientos;
+		labelMinMovimientos.setText("de un mínimo de "+minMovimientos);
 		
 	}
 }

@@ -16,30 +16,14 @@ public class HanoiAIJose {
 		intentosPasos = 0;
 		error = false;
 	}
-	/*
-	public void paso(){
-		destino = calcularDestino(torres.get(origen),origen);
-		if(!torres.mover(origen, destino)){
-			System.out.println(".");
-			origenAumentar();
-			destino = calcularDestino(torres.get(origen),origen);
-			if(!torres.mover(origen, destino)){
-				System.out.println("..");
-				origenAumentar();
-				destino = calcularDestino(torres.get(origen),origen);
-				System.out.println("Destion"+destino);
-				torres.mover(origen, destino);
-			}
-		}
-	}*/
 	
-	public void paso2(){
+	public void paso(){
 		destino = calcularDestino(torres.get(origen),origen);
 		if (intentosPasos < numTorres) {
 			if(!torres.mover(origen, destino)){
 				intentosPasos++;
 				origenAumentar();
-				paso2();
+				paso();
 			} else {
 				intentosPasos = 0;
 			}
@@ -47,6 +31,7 @@ public class HanoiAIJose {
 			error = true;
 		}
 	}
+	
 	public int calcularDestino(int disco, int origen){
 		int destino;
 		if (esPar(disco)) {
@@ -110,7 +95,7 @@ public class HanoiAIJose {
 					torres.procesarBotones();
 					frame.setNumMovimientos(torres.getNumMovimientos());
 					
-					ai.paso2();
+					ai.paso();
 					if((torres.getLastRow(1) == 0 || torres.getLastRow(1) == Integer.MAX_VALUE ) && 
 						(torres.getLastRow(2) == 0 || torres.getLastRow(2) == Integer.MAX_VALUE )){
 						repetirBucle = false;
@@ -136,7 +121,7 @@ public class HanoiAIJose {
 		boolean repetirBucle = true;
 		while(repetirBucle){
 			torres.show();		
-			ai.paso2();
+			ai.paso();
 			System.out.println(torres.getLastRow(1)+"_"+torres.getLastRow(2));
 			if((torres.getLastRow(1) == 0 || torres.getLastRow(1) == Integer.MAX_VALUE ) && 
 				(torres.getLastRow(2) == 0 || torres.getLastRow(2) == Integer.MAX_VALUE ) &&

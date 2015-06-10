@@ -5,28 +5,26 @@ import javax.swing.JTextField;
 import hanoi.gui.MiFrame;
 import hanoi.gui.PanelDibujo;
 
-public class Torres {
+public class Torres { 
 	private static int mensaje, mensajeAnterior;
 	Stack leftTower;
 	Stack centerTower;
 	Stack rigthTower;
-
-
 	
 	private Stack takeStack; // ----------- Pila de movimientos realizados
 	private Stack placeStack;
 	
 	private Stack retakeStack;
 	private Stack replaceStack;
-	private static boolean nuevoJuego = false;
 	
 	private static int contMovimientos = 0;
-	private static int numDiscos;
 	private int minMovimientos;
+	private boolean bloquearMovimientos;
 	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth){
 		minMovimientos = (int) (Math.pow(2,higth) - 1);
+		contMovimientos = 0;
 		
 		leftTower = new Stack(1);
 		centerTower = new Stack(2);
@@ -136,22 +134,22 @@ public class Torres {
 	public void mover (int inicio, int destino, boolean roll){ // Este es el movimiento propio de los Deshacer y Rehacer
 		
 		//Comprobar muy bien que no se ponga en un disco en una torre que no corresponda (por ejemplo, en la torre 4)
-				if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
-					System.out.println("error");
-				} else { //torres válidas
-					//Comprueba que no se pone el disco encima de un disco más pequeño
-					//Además hay que tener cuidado con algunas cosas:
-						//Que ocurre cuando el disco que estás cogiendo es inexistente
-						//Que ocurre cuando la torre en la que vas a ponerla está vacía
-					if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
-						int disco = 0;
-						disco = extraer(inicio);
-						poner(inicio,destino,disco);
+		if (inicio > 3 || inicio < 1 || destino > 3 || destino < 1) {
+			System.out.println("error");
+		} else { //torres válidas
+			//Comprueba que no se pone el disco encima de un disco más pequeño
+			//Además hay que tener cuidado con algunas cosas:
+				//Que ocurre cuando el disco que estás cogiendo es inexistente
+				//Que ocurre cuando la torre en la que vas a ponerla está vacía
+			if (get(inicio) < get(destino) || ((get(destino) == Integer.MAX_VALUE ) && (get(inicio) != Integer.MAX_VALUE ))) {
+				int disco = 0;
+				disco = extraer(inicio);
+				poner(inicio,destino,disco);
 //						System.out.println();
 //						System.out.println("Se han realizado " + contMovimientos + " movimientos.");				
 //						System.out.println("_______");
-					}
-				}
+			}
+		}
 				
 		
 	}
@@ -244,20 +242,22 @@ public class Torres {
 	 * 8 Pulsar el botón adelante
 	 */
 	public void procesarBotones(){
-		//Opciones de quitar y poner
-		if (mensajePoner()){
-			if (mensajeAnteriorQuitar()){
-				
-				int origen = mensajeAnterior;
-				int destino = deMensajeANumPila(mensaje);
-				mover(origen,destino);
-				mensajeAnterior = 0;
-				mensaje = 0;
+		if(!bloquearMovimientos) {
+			//Opciones de quitar y poner
+			if (mensajePoner()){
+				if (mensajeAnteriorQuitar()){
+					
+					int origen = mensajeAnterior;
+					int destino = deMensajeANumPila(mensaje);
+					mover(origen,destino);
+					mensajeAnterior = 0;
+					mensaje = 0;
+				}
+			} else if (mensaje == 7){
+				deshacer();
+			} else if (mensaje == 8) {
+				rehacer();
 			}
-		} else if (mensaje == 7){
-			deshacer();
-		} else if (mensaje == 8) {
-			rehacer();
 		}
 	}
 	
@@ -274,46 +274,47 @@ public class Torres {
 	 * @param y
 	 */
 	public void recibirRaton(int e, int x, int y) {
-		
-		//Se comprueba que evento es
-		if (e == 1 ) { //Evento click
-			leftTower.comprobarClick(x,y);
-			centerTower.comprobarClick(x, y);
-			rigthTower.comprobarClick(x, y);
-		} else if (e == 2) { //Evento presionar
-			leftTower.comprobarPresion(x,y);
-			centerTower.comprobarPresion(x, y);
-			rigthTower.comprobarPresion(x, y);
-		} else if (e == 3){ //Evento arrastrar
-			boolean yaHaMovido;
-			yaHaMovido = leftTower.arrastra(x,y);
-			if (!yaHaMovido) {
-				yaHaMovido = centerTower.arrastra(x, y);
-			}
-			if (!yaHaMovido) {
-				rigthTower.arrastra(x, y);
-			}
-		} else if (e == 4 || e == 5){ //Evento liberar y sacar el cursor del panel
-			int origen, destino;
-			origen = destino = 0;
-			if (leftTower.liberar(x,y)) {
-				origen = 1;
-			} else if (	centerTower.liberar(x, y)){
-				origen = 2;
-			} else if (rigthTower.liberar(x, y)){ //importante no poner else para que se ejecute el código
-				origen = 3;
-			}
-			if (240 >= x) {
-				destino = 1;
-			} else if (x > 240 && x < 460){
-				destino = 2;
-			} else {
-				destino = 3;
-			}
-//			System.out.println(origen+"_"+destino);
-			if (origen != 0 && destino != 0) {
-				if(!mover(origen,destino)){
-					mover(origen,origen);
+		if(!bloquearMovimientos){
+			//Se comprueba que evento es
+			if (e == 1 ) { //Evento click
+				leftTower.comprobarClick(x,y);
+				centerTower.comprobarClick(x, y);
+				rigthTower.comprobarClick(x, y);
+			} else if (e == 2) { //Evento presionar
+				leftTower.comprobarPresion(x,y);
+				centerTower.comprobarPresion(x, y);
+				rigthTower.comprobarPresion(x, y);
+			} else if (e == 3){ //Evento arrastrar
+				boolean yaHaMovido;
+				yaHaMovido = leftTower.arrastra(x,y);
+				if (!yaHaMovido) {
+					yaHaMovido = centerTower.arrastra(x, y);
+				}
+				if (!yaHaMovido) {
+					rigthTower.arrastra(x, y);
+				}
+			} else if (e == 4 || e == 5){ //Evento liberar y sacar el cursor del panel
+				int origen, destino;
+				origen = destino = 0;
+				if (leftTower.liberar(x,y)) {
+					origen = 1;
+				} else if (	centerTower.liberar(x, y)){
+					origen = 2;
+				} else if (rigthTower.liberar(x, y)){ //importante no poner else para que se ejecute el código
+					origen = 3;
+				}
+				if (240 >= x) {
+					destino = 1;
+				} else if (x > 240 && x < 460){
+					destino = 2;
+				} else {
+					destino = 3;
+				}
+	//			System.out.println(origen+"_"+destino);
+				if (origen != 0 && destino != 0) {
+					if(!mover(origen,destino)){
+						mover(origen,origen);
+					}
 				}
 			}
 		}
@@ -370,22 +371,6 @@ public class Torres {
 		return contMovimientos;
 	}
 	
-	public static void setNuevoJuego(boolean b){
-		nuevoJuego = b;
-	}
-	
-	public boolean getNuevoJuego(){
-		return nuevoJuego;
-	}
-
-	public static void setNumDiscos(int num) {
-		numDiscos = num;
-	}
-
-	public static int getNumDiscos() {
-		return numDiscos;
-	}
-	
 	public int getLastRow(int torre){
 		int lastRow = Integer.MAX_VALUE;
 		switch(torre){
@@ -407,41 +392,18 @@ public class Torres {
 		return minMovimientos;
 	}
 	
-	public static void main(String Args[]){
-		nuevoJuego = true;
-		MiFrame frame = new MiFrame("Torres Hanoi");
-		PanelDibujo ventana = frame.getVentana();	
-		numDiscos = 5;
-		while (nuevoJuego){	
-			contMovimientos = 0;
-			Torres torres = new Torres(numDiscos,ventana);
-			ventana.setTorresHanoi(torres);
-			frame.setNumDiscos(numDiscos);
-			frame.setMaxMovimientos(torres.getMinMovimientos());
-			frame.paintAll(frame.getGraphics());
-			do{
-				nuevoJuego = false;
-				try {
-//					torres.show();
-					ventana.repaint();
-					//COn consola:
-					//int origen = UtilsUI.getConsoleInt("De que torre quieres sacarlo:");
-					//int destino = UtilsUI.getConsoleInt("En que torre quieres ponerlo:");
-					//torres.mover(origen, destino);	
-					
-					//Con GUI:
-					torres.procesarBotones();
-					frame.setNumMovimientos(torres.getNumMovimientos());
-//					nuevoJuego = torres.getNuevoJuego();
-					if (nuevoJuego){
-//						numDiscos = frame.getNumDiscos();
-//						System.out.println("__");
-					}
-					Thread.sleep(36); //36 ~= 28fps
-				} catch (Exception e){
-					//
-				}
-			}while (!nuevoJuego);
+	public void setBloquearMovimientos(boolean b){
+		bloquearMovimientos = b;
+	}
+	
+	public boolean esFinJuego() {
+		if((this.getLastRow(1) == 0 || this.getLastRow(1) == Integer.MAX_VALUE ) && 
+			(this.getLastRow(2) == 0 || this.getLastRow(2) == Integer.MAX_VALUE ) ){
+			this.setBloquearMovimientos(true);
+			return true;
+		} else {
+			return false;
 		}
 	}
+	
 }

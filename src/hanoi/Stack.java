@@ -22,7 +22,7 @@ public class Stack {
 	}
 	
 	public class Nodo {
-		int dato;
+		int ancho;
 		int piso;
 		Nodo sig;
 		boolean inicializado = false;
@@ -59,7 +59,7 @@ public class Stack {
 		 */
 		public void calcularPosiciones(){
 			//calcular posiciones en pantalla			
-			width = dato * multiplicador;
+			width = ancho * multiplicador;
 			height = (int) (multiplicador * 0.8);
 			x = xinicial + (numTorre-1) * multiplicador*10 + (100 - width) / 2;
 			y = yinicial - (piso * multiplicador);
@@ -118,7 +118,7 @@ public class Stack {
 		if (d != 0) {
 			Nodo nuevo;
 			nuevo = new Nodo();
-			nuevo.dato = d;
+			nuevo.ancho = d;
 			if (raiz==null){
 				nuevo.sig = null;
 				raiz = nuevo;	
@@ -138,7 +138,7 @@ public class Stack {
 	
 	public int pop(){
 		if (raiz!= null){
-				int informacion = raiz.dato;
+				int informacion = raiz.ancho;
 				raiz=raiz.sig;
 				lastRow--;
 				return informacion;
@@ -150,7 +150,7 @@ public class Stack {
 	public int get(){
 		int informacion = Integer.MAX_VALUE;
 		if (raiz!=null){
-			informacion = raiz.dato;
+			informacion = raiz.ancho;
 		}
 		return informacion;
 	}
@@ -171,7 +171,7 @@ public class Stack {
 			Nodo elemento = new Nodo();
 			while(elemento.hasNext()){
 				elemento = next(elemento);
-				System.out.println("Torre "+numTorre+"_"+elemento.dato);
+				System.out.println("Torre "+numTorre+"_"+elemento.ancho);
 			}
 		} catch (Exception e) {	}
 	}
@@ -201,7 +201,7 @@ public class Stack {
 		Nodo aux = raiz;
 				System.out.println("Contenido de la pila:");
 		while (aux!=null){
-			System.out.print(aux.dato+"->");
+			System.out.print(aux.ancho+"->");
 			aux=aux.sig;
 		}
 		System.out.println();
