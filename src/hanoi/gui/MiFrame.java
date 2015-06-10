@@ -49,6 +49,11 @@ public class MiFrame extends JFrame {
 		((BotonesDerechos) botonesDerechos).setNumDiscos(numDiscos);
 		
 	}
+
+	public void setMaxMovimientos(int minMovimientos) {
+		((BotonesDerechos) botonesDerechos).setMinMovimientos(minMovimientos);
+		
+	}
 	
 
 }

@@ -16,6 +16,7 @@ public class HanoiAIJose {
 		intentosPasos = 0;
 		error = false;
 	}
+	/*
 	public void paso(){
 		destino = calcularDestino(torres.get(origen),origen);
 		if(!torres.mover(origen, destino)){
@@ -30,7 +31,7 @@ public class HanoiAIJose {
 				torres.mover(origen, destino);
 			}
 		}
-	}
+	}*/
 	
 	public void paso2(){
 		destino = calcularDestino(torres.get(origen),origen);
@@ -109,7 +110,7 @@ public class HanoiAIJose {
 					torres.procesarBotones();
 					frame.setNumMovimientos(torres.getNumMovimientos());
 					
-					ai.paso();
+					ai.paso2();
 					if((torres.getLastRow(1) == 0 || torres.getLastRow(1) == Integer.MAX_VALUE ) && 
 						(torres.getLastRow(2) == 0 || torres.getLastRow(2) == Integer.MAX_VALUE )){
 						repetirBucle = false;

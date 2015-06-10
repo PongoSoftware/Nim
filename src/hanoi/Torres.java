@@ -22,9 +22,12 @@ public class Torres {
 	
 	private static int contMovimientos = 0;
 	private static int numDiscos;
+	private int minMovimientos;
 	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth){
+		minMovimientos = (int) (Math.pow(2,higth) - 1);
+		
 		leftTower = new Stack(1);
 		centerTower = new Stack(2);
 		rigthTower = new Stack(3);
@@ -400,6 +403,10 @@ public class Torres {
 		return lastRow;
 	}
 	
+	public int getMinMovimientos(){
+		return minMovimientos;
+	}
+	
 	public static void main(String Args[]){
 		nuevoJuego = true;
 		MiFrame frame = new MiFrame("Torres Hanoi");
@@ -410,6 +417,7 @@ public class Torres {
 			Torres torres = new Torres(numDiscos,ventana);
 			ventana.setTorresHanoi(torres);
 			frame.setNumDiscos(numDiscos);
+			frame.setMaxMovimientos(torres.getMinMovimientos());
 			frame.paintAll(frame.getGraphics());
 			do{
 				nuevoJuego = false;

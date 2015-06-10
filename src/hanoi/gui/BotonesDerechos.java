@@ -32,6 +32,7 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	private JTextField textNum, textContador;
 	private int numMovimientos;
 	private int numDiscos;
+	private int minMovimientos;
 
 	/**
 	 * Create the panel.
@@ -50,32 +51,50 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 		add(panelCentro, BorderLayout.CENTER);
 		add(panelSur,BorderLayout.SOUTH);
 		
+		JLabel labelMinMovimientos = new JLabel();
+		panelSur.add(labelMinMovimientos);
+		labelMinMovimientos.setText("de un mínimo de "+minMovimientos);
+		
 		btnAdelante = new JButton("Adelante");		
 		btnAdelante.addActionListener(this);
 
 		btnAtras = new JButton("Atras");
 		btnAtras.addActionListener(this);
 		
-		JLabel labelMovimientos = new JLabel();
-		labelMovimientos.setText("Número de movimientos: ");
-		
-		textContador = new JTextField();
-		textContador.setText(""+numMovimientos);
-		textContador.setColumns(3);
-		
-		textNum = new JTextField();
-		textNum.setText(""+numDiscos);
-		textNum.setColumns(2);
-		
-		btnNuevo = new JButton("Nuevo");		
-		btnNuevo.addActionListener(this);
-		
 		panelNorte.add(btnAtras);
-		panelNorte.add(btnAdelante);	
-		panelCentro.add(labelMovimientos);
-		panelCentro.add(textContador);
-		panelSur.add(textNum);
-		panelSur.add(btnNuevo);
+		panelNorte.add(btnAdelante);
+		
+			panelCentro.setLayout(new BorderLayout(0, 0));
+		
+			JPanel filaSuperior = new JPanel();
+			panelCentro.add(filaSuperior, BorderLayout.NORTH);
+			
+			textNum = new JTextField();
+			filaSuperior.add(textNum);
+			textNum.setText(""+numDiscos);
+			textNum.setColumns(2);
+			
+			btnNuevo = new JButton("Nuevo");		
+			filaSuperior.add(btnNuevo);
+			btnNuevo.addActionListener(this);
+			
+			JPanel filaCentro = new JPanel();
+			panelCentro.add(filaCentro, BorderLayout.CENTER);
+			
+			JButton autoresolver = new JButton("Iniciar/Parar Autoresolver");
+			filaCentro.add(autoresolver);
+			
+			JPanel filaInferior = new JPanel();
+			panelCentro.add(filaInferior,BorderLayout.SOUTH);
+			
+			JLabel labelMovimientos = new JLabel();
+			filaInferior.add(labelMovimientos);
+			labelMovimientos.setText("Número de movimientos: ");
+			
+			textContador = new JTextField();
+			filaInferior.add(textContador);
+			textContador.setText(""+numMovimientos);
+			textContador.setColumns(3);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -112,5 +131,10 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 			numDiscos = 1;
 		}	
 		textNum.setText(""+numDiscos);
+	}
+
+	public void setMinMovimientos(int minMovimientos) {
+		this.minMovimientos = minMovimientos;
+		
 	}
 }
