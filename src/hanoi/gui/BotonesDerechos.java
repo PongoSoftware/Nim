@@ -1,7 +1,6 @@
 package hanoi.gui;
 
 import hanoi.HanoiMain;
-import hanoi.Torres;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -102,9 +101,9 @@ public class BotonesDerechos extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==btnAtras) {
-			Torres.recibirMensaje(7);
+			HanoiMain.recibirMensaje(7);
 		} else if (e.getSource()==btnAdelante) {
-			Torres.recibirMensaje(8);
+			HanoiMain.recibirMensaje(8);
 		} else if (e.getSource()==btnNuevo){
 			setNumDiscos(Integer.parseInt(textNum.getText()));
 			HanoiMain.setNumDiscos(numDiscos);

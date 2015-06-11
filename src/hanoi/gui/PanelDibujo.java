@@ -1,7 +1,8 @@
 package hanoi.gui;
 
-import hanoi.Stack;
-import hanoi.Torres;
+import hanoi.HanoiMain;
+import hanoi.StackHanoi;
+import hanoi.HanoiMain;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,10 +19,10 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Stack torre1;
-	private Stack torre2;
-	private Stack torre3;
-	private Torres torresHanoi;
+	private StackHanoi torre1;
+	private StackHanoi torre2;
+	private StackHanoi torre3;
+	private HanoiMain controlador;
 
 	/**
 	 * Create the panel.
@@ -36,8 +37,8 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 //        setBackground(Color.GREEN);
 	}
 	
-	public void setTorresHanoi(Torres torres){
-		torresHanoi = torres;
+	public void setControllador(HanoiMain controlador){
+		this.controlador = controlador;
 	}
 	
 	public void paintComponent(Graphics g){
@@ -64,15 +65,15 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 		 }
 	}	
 	
-	public void setTorre1(Stack torre){
+	public void setTorre1(StackHanoi torre){
 		torre1 = torre;
 	}
 	
-	public void setTorre2(Stack torre){
+	public void setTorre2(StackHanoi torre){
 		torre2 = torre;		
 	}
 	
-	public void setTorre3(Stack torre){
+	public void setTorre3(StackHanoi torre){
 		torre3 = torre;		
 	}
 	
@@ -81,24 +82,24 @@ public class PanelDibujo extends JPanel  implements MouseListener, MouseMotionLi
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		torresHanoi.recibirRaton(1,e.getX(),e.getY());
+		controlador.recibirRaton(1,e.getX(),e.getY());
 		
 	}
 
 	public void mouseExited(MouseEvent e) {
-		torresHanoi.recibirRaton(5,e.getX(),e.getY());
+		controlador.recibirRaton(5,e.getX(),e.getY());
 	}
 
 	public void mousePressed(MouseEvent e) {
-		torresHanoi.recibirRaton(2,e.getX(),e.getY());
+		controlador.recibirRaton(2,e.getX(),e.getY());
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		torresHanoi.recibirRaton(4, e.getX(), e.getY());
+		controlador.recibirRaton(4, e.getX(), e.getY());
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		torresHanoi.recibirRaton(3,e.getX(),e.getY());		
+		controlador.recibirRaton(3,e.getX(),e.getY());		
 	}
 
 	@Override

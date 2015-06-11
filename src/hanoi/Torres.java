@@ -6,35 +6,34 @@ import hanoi.gui.MiFrame;
 import hanoi.gui.PanelDibujo;
 
 public class Torres { 
-	private static int mensaje, mensajeAnterior;
-	Stack leftTower;
-	Stack centerTower;
-	Stack rigthTower;
+	StackHanoi leftTower;
+	StackHanoi centerTower;
+	StackHanoi rightTower;
 	
-	private Stack takeStack; // ----------- Pila de movimientos realizados
-	private Stack placeStack;
+	private StackHanoi takeStack; // ----------- Pila de movimientos realizados
+	private StackHanoi placeStack;
 	
-	private Stack retakeStack;
-	private Stack replaceStack;
+	private StackHanoi retakeStack;
+	private StackHanoi replaceStack;
+	
 	
 	private static int contMovimientos = 0;
 	private int minMovimientos;
-	private boolean bloquearMovimientos;
 	
 	//el constructor tiene que crear el juego con una serie de normas determinadas
 	public Torres(int higth){
 		minMovimientos = (int) (Math.pow(2,higth) - 1);
 		contMovimientos = 0;
 		
-		leftTower = new Stack(1);
-		centerTower = new Stack(2);
-		rigthTower = new Stack(3);
+		leftTower = new StackHanoi(1);
+		centerTower = new StackHanoi(2);
+		rightTower = new StackHanoi(3);
 		
-		takeStack = new Stack();
-		placeStack = new Stack();
+		takeStack = new StackHanoi();
+		placeStack = new StackHanoi();
 		
-		retakeStack = new Stack();
-		replaceStack = new Stack();
+		retakeStack = new StackHanoi();
+		replaceStack = new StackHanoi();
 		
 		for (int i = higth; i > 0; i--){
 			leftTower.push(i);
@@ -46,7 +45,7 @@ public class Torres {
 		this(higth);
 		ventana.setTorre1(leftTower);
 		ventana.setTorre2(centerTower);
-		ventana.setTorre3(rigthTower);
+		ventana.setTorre3(rightTower);
 	}
 	
 	private int extraer(int inicio){ // No es útli de momento, porque registra todos los movimientos, incluso los de 
@@ -60,7 +59,7 @@ public class Torres {
 			disco = centerTower.pop();
 			break;
 		case 3:
-			disco = rigthTower.pop();
+			disco = rightTower.pop();
 			break;
 		}
 		return disco;
@@ -75,7 +74,7 @@ public class Torres {
 			centerTower.push(disco);
 			break;
 		case 3:
-			rigthTower.push(disco);
+			rightTower.push(disco);
 			break;
 		}		
 	}
@@ -90,7 +89,7 @@ public class Torres {
 			valor = centerTower.get();
 			break;
 		case 3:
-			valor = rigthTower.get();
+			valor = rightTower.get();
 			break;
 		}	
 		return valor;
@@ -154,46 +153,6 @@ public class Torres {
 		
 	}
 	
-	public void deshacer(){
-
-		if(placeStack.get() != Integer.MAX_VALUE && takeStack.get() != Integer.MAX_VALUE){
-			
-			int inicio = placeStack.pop();
-			int destino = takeStack.pop();
-			
-			replaceStack.push(destino);
-			retakeStack.push(inicio);
-			
-			mover(inicio, destino, true);
-		
-			contMovimientos--;
-			
-		}
-		
-		mensaje = 0;
-		
-	}
-	
-	public void rehacer(){
-		
-		if(replaceStack.get() != Integer.MAX_VALUE && retakeStack.get() != Integer.MAX_VALUE){
-		
-			int inicio = replaceStack.pop();
-			int destino = retakeStack.pop();
-			
-			placeStack.push(destino);
-			takeStack.push(inicio);
-			
-			mover(inicio, destino, true);
-			
-			contMovimientos++;
-			
-		}
-		
-		mensaje = 0;
-		
-	}
-	
 	public void borrarRehacer(){
 		
 		while(replaceStack.get() != Integer.MAX_VALUE){
@@ -213,141 +172,42 @@ public class Torres {
 	public void show(){
 		leftTower.recorrer();
 		centerTower.recorrer();
-		rigthTower.recorrer();
-	}
+		rightTower.recorrer();
+	}	
+	
 
-	/** 
-	 * Recibe un mensaje desde la interfaz gráfica
-	 * @param mensajeRecibido
-	 */
-	public static void recibirMensaje(int mensajeRecibido) {
+	
+	public void deshacer(){
+
+		if(placeStack.get() != Integer.MAX_VALUE && takeStack.get() != Integer.MAX_VALUE){
+			
+			int inicio = placeStack.pop();
+			int destino = takeStack.pop();
+			
+			replaceStack.push(destino);
+			retakeStack.push(inicio);
+			
+			mover(inicio, destino, true);		
+			contMovimientos--;
+		}
+	}
+	
+	public void rehacer(){
 		
-		mensajeAnterior = mensaje; //mensaje anteriormente recibido
-		mensaje = mensajeRecibido; //mensaje actual obtenido
-	}
-	
-	
-	
-	/**
-	 * Procesa los mensajes recibidos
-	 * 
-	 * Lista de códigos:
-	 * 1 Quitar de torre 1
-	 * 2 Quitar de torre 2
-	 * 3 Quitar de torre 3
-	 * 4 Poner en torre 1
-	 * 5 Poner en torre 2
-	 * 6 Poner en torre 3
-	 * 7 Pulsar el botón atrás
-	 * 8 Pulsar el botón adelante
-	 */
-	public void procesarBotones(){
-		if(!bloquearMovimientos) {
-			//Opciones de quitar y poner
-			if (mensajePoner()){
-				if (mensajeAnteriorQuitar()){
-					
-					int origen = mensajeAnterior;
-					int destino = deMensajeANumPila(mensaje);
-					mover(origen,destino);
-					mensajeAnterior = 0;
-					mensaje = 0;
-				}
-			} else if (mensaje == 7){
-				deshacer();
-			} else if (mensaje == 8) {
-				rehacer();
-			}
-		}
-	}
-	
-	/**
-	 * Recibe mensajes del ratón desde Swing
-	 * 
-	 * 1 Click
-	 * 2 Presion
-	 * 3 Arrastro
-	 * 4 Libero
-	 * 5 Ratón sale pantalla
-	 * @param e
-	 * @param x
-	 * @param y
-	 */
-	public void recibirRaton(int e, int x, int y) {
-		if(!bloquearMovimientos){
-			//Se comprueba que evento es
-			if (e == 1 ) { //Evento click
-				leftTower.comprobarClick(x,y);
-				centerTower.comprobarClick(x, y);
-				rigthTower.comprobarClick(x, y);
-			} else if (e == 2) { //Evento presionar
-				leftTower.comprobarPresion(x,y);
-				centerTower.comprobarPresion(x, y);
-				rigthTower.comprobarPresion(x, y);
-			} else if (e == 3){ //Evento arrastrar
-				boolean yaHaMovido;
-				yaHaMovido = leftTower.arrastra(x,y);
-				if (!yaHaMovido) {
-					yaHaMovido = centerTower.arrastra(x, y);
-				}
-				if (!yaHaMovido) {
-					rigthTower.arrastra(x, y);
-				}
-			} else if (e == 4 || e == 5){ //Evento liberar y sacar el cursor del panel
-				int origen, destino;
-				origen = destino = 0;
-				if (leftTower.liberar(x,y)) {
-					origen = 1;
-				} else if (	centerTower.liberar(x, y)){
-					origen = 2;
-				} else if (rigthTower.liberar(x, y)){ //importante no poner else para que se ejecute el código
-					origen = 3;
-				}
-				if (240 >= x) {
-					destino = 1;
-				} else if (x > 240 && x < 460){
-					destino = 2;
-				} else {
-					destino = 3;
-				}
-	//			System.out.println(origen+"_"+destino);
-				if (origen != 0 && destino != 0) {
-					if(!mover(origen,destino)){
-						mover(origen,origen);
-					}
-				}
-			}
-		}
+		if(replaceStack.get() != Integer.MAX_VALUE && retakeStack.get() != Integer.MAX_VALUE){
 		
-	}
-
-	/**
-	 * Comprueba si se ha recibido un mensaje de poner
-	 * 
-	 * @return
-	 */
-	private boolean mensajePoner() {
-		if (mensaje < 4 || mensaje > 6){
-			return false;
-		} else {
-			return true;
+			int inicio = replaceStack.pop();
+			int destino = retakeStack.pop();
+			
+			placeStack.push(destino);
+			takeStack.push(inicio);
+			
+			mover(inicio, destino, true);
+			contMovimientos++;
+			
 		}
 	}
-
-	/**
-	 * Comprueba si el mensaje anterior era de quitar un disco
-	 * 
-	 * @return
-	 */
-	private boolean mensajeAnteriorQuitar() {
-		if (mensajeAnterior < 1 || mensajeAnterior > 3){
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	private int deMensajeANumPila(int mensaje){
+	protected int deMensajeANumPila(int mensaje){
 		int pila = 0;
 		if (mensaje == 4) {
 			pila = 1;
@@ -360,14 +220,7 @@ public class Torres {
 		return pila;
 	}
 	
-	
-	public static int movimientosRealizados(){
-		
-		return contMovimientos;
-		
-	}
-	
-	public static int getNumMovimientos(){
+	public static int getContMovimientos(){
 		return contMovimientos;
 	}
 	
@@ -381,7 +234,7 @@ public class Torres {
 			lastRow = centerTower.getLastRow();
 			break;
 		case 3:
-			lastRow = rigthTower.getLastRow();
+			lastRow = rightTower.getLastRow();
 			break;
 		}
 		
@@ -392,18 +245,22 @@ public class Torres {
 		return minMovimientos;
 	}
 	
-	public void setBloquearMovimientos(boolean b){
-		bloquearMovimientos = b;
-	}
-	
 	public boolean esFinJuego() {
 		if((this.getLastRow(1) == 0 || this.getLastRow(1) == Integer.MAX_VALUE ) && 
 			(this.getLastRow(2) == 0 || this.getLastRow(2) == Integer.MAX_VALUE ) ){
-			this.setBloquearMovimientos(true);
 			return true;
 		} else {
 			return false;
 		}
-	}
+	}	
 	
+	public StackHanoi getLeftTower(){
+		return leftTower;
+	}
+	public StackHanoi getCenterTower(){
+		return centerTower;
+	}
+	public StackHanoi getRightTower(){
+		return rightTower;
+	}
 }

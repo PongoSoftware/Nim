@@ -61,7 +61,7 @@ public class HanoiAIJose {
 		}
 		System.out.println("Origen Aumentado"+origen);
 	}
-	
+	/*
 	public static void main(String[] args) {
 //		conTexto();
 		conGraficos();
@@ -108,12 +108,12 @@ public class HanoiAIJose {
 			}while (!nuevoJuego && repetirBucle);
 			ventana.repaint();
 		}
-	}
+	} */
 	
 	public boolean error(){
 		return error;
 	}
-
+/*
 	public static void conTexto(){ //¡Funciona!
 		Torres torres = new Torres(5);
 		HanoiAIJose ai = new HanoiAIJose(torres);
@@ -130,5 +130,5 @@ public class HanoiAIJose {
 			}
 		}
 		torres.show();
-	}
+	} */
 }

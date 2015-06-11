@@ -5,17 +5,17 @@ import hanoi.gui.PanelDibujo;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Stack {
+public class StackHanoi {
 	private Nodo raiz;
 	private int lastRow = 0;
 	private int numTorre;
 	
-	public Stack(int i){
+	public StackHanoi(int i){
 		raiz = null;
 		this.numTorre = i;
 	}
 	
-	public Stack(){
+	public StackHanoi(){
 		
 		raiz = null;
 		
